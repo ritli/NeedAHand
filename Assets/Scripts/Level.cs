@@ -1,0 +1,24 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Level : MonoBehaviour
+{
+
+	// Use this for initialization
+	void Start ()
+    {
+        LoadLevel();
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+		
+	}
+
+    private void LoadLevel()
+    {
+
+    }
+}

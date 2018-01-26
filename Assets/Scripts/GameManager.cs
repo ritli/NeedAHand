@@ -8,9 +8,32 @@ public static class GameManager
     // Functions
     public static void init()
     {
+        LoadLevel();
+    }
+
+    // Input?
+    public static void LoadLevel()
+    {
 
     }
-    
+
+    // Input?
+    public static void EndLevel()
+    {
+
+    }
+
+    // Input/Output?
+    public static void SetCheckpoint()
+    {
+        
+    }
+
+    public static void SpawnPlayer()
+    {
+
+    }
+
     // Properties
     #endregion
 
