@@ -17,6 +17,8 @@ public class Body : MonoBehaviour {
 
     public float xSpeed = 10;
 
+    public LayerMask layermask;
+
     Rigidbody2D rigidbody;
 
     public GameObject legPrefab;
@@ -28,6 +30,20 @@ public class Body : MonoBehaviour {
 
     }
 	
+    bool OnGround
+    {
+        get
+        {
+            if (Physics2D.Raycast(transform.position, Vector2.down, 1f, layermask))
+            {
+                print("ONGROUND");
+                return true;
+            }
+
+            return false;
+        }
+    }
+
 	// Update is called once per frame
 	void Update () {
         InputUpdate();
@@ -36,8 +52,11 @@ public class Body : MonoBehaviour {
     void InputUpdate()
     {
         float xVelocity = Input.GetAxis("Horizontal");
+        float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0.5f : 0;
 
-        rigidbody.AddForce(xVelocity * Vector2.right * xSpeed, ForceMode2D.Force);
+        print(gravityCompensation);
+
+        rigidbody.AddForce(xVelocity * Vector2.right * xSpeed + gravityCompensation * Vector2.up, ForceMode2D.Force);
 
         if (Input.GetButtonDown("Vertical"))
         {
@@ -120,7 +139,7 @@ public class Body : MonoBehaviour {
 
     }
 
-    void AddLimb(Limb limb)
+    public void AddLimb(Limb limb)
     {
         GameObject objectToSpawn = null;
 
@@ -135,7 +154,7 @@ public class Body : MonoBehaviour {
                 
                 break;
             case LimbType.Leg:
-                isTrigger = false;
+                isTrigger = true;
                 objectToSpawn = legPrefab;
 
                 break;

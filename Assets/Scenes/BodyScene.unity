@@ -372,16 +372,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 233914674201489218, guid: 0f12bf9af25d9744a8f6ac0c93fb1af9,
-        type: 2}
-      propertyPath: m_ConnectedAnchor.x
-      value: -3.78
-      objectReference: {fileID: 0}
-    - target: {fileID: 233914674201489218, guid: 0f12bf9af25d9744a8f6ac0c93fb1af9,
-        type: 2}
-      propertyPath: m_ConnectedAnchor.y
-      value: -0.8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f12bf9af25d9744a8f6ac0c93fb1af9, type: 2}
   m_IsPrefabParent: 0
@@ -522,6 +512,11 @@ Prefab:
     - target: {fileID: 4865510431922704, guid: 72d39656b9d255a4dbc5800190b085eb, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114973604967255214, guid: 72d39656b9d255a4dbc5800190b085eb,
+        type: 2}
+      propertyPath: layermask.m_Bits
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72d39656b9d255a4dbc5800190b085eb, type: 2}
