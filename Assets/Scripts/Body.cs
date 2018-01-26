@@ -15,7 +15,8 @@ public class Body : MonoBehaviour {
 
     Rigidbody2D rigidbody;
 
-    
+    public GameObject legPrefab;
+    public GameObject armPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +41,28 @@ public class Body : MonoBehaviour {
         }
 
     }
+
+    void AddLimb(Limb limb)
+    {
+        GameObject objectToSpawn = null;
+
+        limbs.Add(limb);
+
+        switch (limb.getLimb())
+        {
+            case LimbType.Arm:
+                objectToSpawn = armPrefab;                
+                
+                break;
+            case LimbType.Leg:
+                objectToSpawn = legPrefab;
+
+                break;
+            default:
+                break;
+        }
+    }
+
 
     int GetLegCount
     {
