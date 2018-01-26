@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmLimb : Limb {
+public class Level : MonoBehaviour
+{
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        LoadLevel();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
-    public override LimbType getLimb()
+    private void LoadLevel()
     {
-        return LimbType.Arm;
+
     }
 }

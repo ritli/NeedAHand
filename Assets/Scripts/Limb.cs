@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Limb : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public enum LimbType
+{
+    Arm, Leg
+}
+
+public abstract class Limb : MonoBehaviour {
+
+    LimbType limbtype;
+
+    public abstract LimbType getLimb();
 }
