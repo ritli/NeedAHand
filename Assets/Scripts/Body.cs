@@ -5,11 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Body : MonoBehaviour {
 
-    List<Limb> limbs;
+    public List<Limb> limbs;
 
-    public float baseJumpForce;
+    public float baseJumpForce = 100;
     //Force added per leg
-    public float jumpMultiplier;
+    public float jumpMultiplier = 50;
+
+    public float xSpeed = 10;
 
     Rigidbody2D rigidbody;
 
@@ -23,14 +25,14 @@ public class Body : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        InputUpdate();
 	}
 
     void InputUpdate()
     {
         float xVelocity = Input.GetAxis("Horizontal");
 
-        rigidbody.AddForce(xVelocity * transform.right, ForceMode2D.Force);
+        rigidbody.AddForce(xVelocity * transform.right * xSpeed, ForceMode2D.Force);
 
         if (Input.GetButtonDown("Vertical"))
         {
@@ -47,6 +49,23 @@ public class Body : MonoBehaviour {
             foreach (Limb l in limbs)
             {
                 if (l.GetComponent<LegLimb>())
+                {
+                    i++;
+                }
+            }
+
+            return i;
+        }
+    }
+
+    int GetArmCount
+    {
+        get
+        {
+            int i = 0;
+            foreach (Limb l in limbs)
+            {
+                if (l.GetComponent<ArmLimb>())
                 {
                     i++;
                 }
