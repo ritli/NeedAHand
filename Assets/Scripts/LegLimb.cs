@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LegLimb : Limb {
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -13,4 +13,9 @@ public class LegLimb : Limb {
 	void Update () {
 		
 	}
+
+    public override LimbType getLimb()
+    {
+        return LimbType.Leg;
+    }
 }

@@ -13,4 +13,9 @@ public class ArmLimb : Limb {
 	void Update () {
 		
 	}
+
+    public override LimbType getLimb()
+    {
+        return LimbType.Arm;
+    }
 }
