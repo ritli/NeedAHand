@@ -6,9 +6,10 @@ public static class GameManager
 {
     #region public
     // Functions
+
     public static void init()
     {
-        LoadLevel();
+        
     }
 
     // Input?
@@ -29,16 +30,17 @@ public static class GameManager
         
     }
 
-    public static void SpawnPlayer()
+    public static void SpawnPlayers()
     {
-
+        //GameObject player = (GameObject)Instantiate(Resources.Load("playerPrefab"));
+        //m_players.Add(player);
     }
 
     // Properties
     #endregion
 
     #region private
-    private static List<Body> m_players = new List<Body>();
+    private static List<GameObject> m_players = new List<GameObject>();
     private static object m_currentMap;
     #endregion
 }
