@@ -19,7 +19,7 @@ public class SpringPlate : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<Rigidbody2D>() != null)
+        if (!m_onCooldown && other.GetComponent<Rigidbody2D>() != null)
         {
             other.GetComponent<Rigidbody2D>().AddForce((Vector2.right * springForce * xDir) + (Vector2.up * springForce * yDir));
             m_onCooldown = true;
