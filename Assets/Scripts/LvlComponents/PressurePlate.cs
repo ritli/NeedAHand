@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlate : MonoBehaviour {
+/// <summary>
+/// When GOs w/ Body >= reqMass in trigger activate all Door & CrateOnRails children.
+/// If deactivate on leave == true: When mass of GOs w/ Body in trigger < reqMass deactivate all Door & CrateOnRails children.
+/// </summary>
+public class PressurePlate : MonoBehaviour
+{
 
-    [Range(1, 10)]
+    [Range(1, 100)]
     [SerializeField]
     private int reqMass = 1;
     [SerializeField]
@@ -17,13 +22,45 @@ public class PressurePlate : MonoBehaviour {
         // Activation condition?
         if(other.GetComponent<Body>() != null)
         {
-            //m_massOnPlate += other.GetComponent<Body>().Mass();
+            m_massOnPlate += other.GetComponent<Body>().Mass;
         }
 
+        if (m_massOnPlate >= reqMass)
+            activate();
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.GetComponent<Body>() != null)
+        {
+            m_massOnPlate -= other.GetComponent<Body>().Mass;
+        }
+
+        if (deactivateOnLeave && m_massOnPlate < reqMass)
+        {
+            deactivate();
+        }
     }
 
     private void activate()
     {
+        foreach(Transform child in transform)
+        {
+            if (child.GetComponent<CrateOnRails>() != null)
+                child.GetComponent<CrateOnRails>().Activate();
+            else if (child.GetComponent<Door>() != null)
+                child.GetComponent<Door>().Activate();
+        }
+    }
 
+    private void deactivate()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<CrateOnRails>() != null)
+                child.GetComponent<CrateOnRails>().Deactivate();
+            else if (child.GetComponent<Door>() != null)
+                child.GetComponent<Door>().Deactivate();
+        }
     }
 }

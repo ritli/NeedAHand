@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// NOTE: Needs to be child of a PressurePlate object to work properly
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class CrateOnRails : MonoBehaviour {
-
+public class CrateOnRails : MonoBehaviour
+{
     [Range(0f,25f)]
     [SerializeField]
     private float m_range;
@@ -65,6 +64,4 @@ public class CrateOnRails : MonoBehaviour {
             }
         }
     }
-
-
 }
