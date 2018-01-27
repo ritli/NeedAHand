@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
     public void EndLevel()
     {
 		//For now, return to main menu
-		StartCoroutine(TransitionController._GetInstance().Transition(++currentLevelIndex));
+		currentLevelIndex++;
+		StartCoroutine(TransitionController._GetInstance().Transition(currentLevelIndex));
 	}
 
     // Input/Output?
