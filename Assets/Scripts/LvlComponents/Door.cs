@@ -18,4 +18,9 @@ public class Door : MonoBehaviour {
     {
 
     }
+
+    public void Revert()
+    {
+
+    }
 }

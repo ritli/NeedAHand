@@ -66,24 +66,33 @@ public class GameManager : MonoBehaviour
 	}
 
     // Input/Output?
-    public void SetCheckpoint(GameObject point)
+    public void SetCheckpoint(CheckpointData point, int playerID)
     {
-        
+		switch (playerID)
+		{
+			case 1:
+				if (point.id > p1Checkpoint.id)
+					p1Checkpoint = point;
+				break;
+			case 2:
+				if (point.id > p2Checkpoint.id)
+					p2Checkpoint = point;
+				break;
+		}
     }
-	public void SetStartPoint(GameObject point)
-	{
 
-	}
-	public void SetEndPoint(GameObject point)
-	{
-
-	}
     public void SpawnPlayers()
     {
 		m_players.ForEach(player => {
 			player.SetActive(true);
+			RespawnPlayer(player);
 		});
-    }
+
+		//m_players.ForEach(player =>
+		//{
+		//	RespawnPlayer(player);
+		//});
+	}
 	void OnLevelFinishedLoading(Scene level, LoadSceneMode mode)
 	{
 		Debug.Log("Spawning players");
@@ -97,7 +106,7 @@ public class GameManager : MonoBehaviour
 
 	public void RespawnPlayer(GameObject player)
     {
-
+		player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
     }
 
 	// Properties
@@ -109,6 +118,8 @@ public class GameManager : MonoBehaviour
 	#region private
 	private List<GameObject> m_players = new List<GameObject>();
     private object m_currentMap;
+	private CheckpointData p1Checkpoint;
+	private CheckpointData p2Checkpoint;
 	private static GameManager m_Instance;
 
     #endregion

@@ -1,19 +1,18 @@
 fileFormatVersion: 2
-guid: 5cf41c5fb9b2f824daa9df8bc0cb2bb8
-timeCreated: 1517050606
+guid: 8e7c9ef93f014f24494765feb0b0d225
+timeCreated: 1517064135
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Spritesheet WALL2_0
-    21300002: Spritesheet WALL2_1
-    21300004: Spritesheet WALL2_2
-    21300006: Spritesheet WALL2_3
-    21300008: Spritesheet WALL2_4
-    21300010: Spritesheet WALL2_5
-    21300012: Spritesheet WALL2_6
-    21300014: Spritesheet WALL2_7
-    21300016: Spritesheet WALL2_8
-    21300018: Spritesheet WALL2_9
+    21300000: arms and leggs sheet_0
+    21300002: arms and leggs sheet_1
+    21300004: arms and leggs sheet_2
+    21300006: arms and leggs sheet_3
+    21300008: arms and leggs sheet_4
+    21300010: arms and leggs sheet_5
+    21300012: arms and leggs sheet_6
+    21300014: arms and leggs sheet_7
+    21300016: arms and leggs sheet_8
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -41,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: -1
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -88,141 +87,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spritesheet WALL2_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 512
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Spritesheet WALL2_1
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 512
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Spritesheet WALL2_2
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 512
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Spritesheet WALL2_3
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 512
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Spritesheet WALL2_4
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 512
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Spritesheet WALL2_5
+      name: arms and leggs sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.5530519, y: 0.214254}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet WALL2_6
+      name: arms and leggs sheet_1
       rect:
         serializedVersion: 2
-        x: 512
+        x: 127
         y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.5, y: 0.12401843}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet WALL2_7
+      name: arms and leggs sheet_2
       rect:
         serializedVersion: 2
-        x: 1024
+        x: 254
         y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.55305207, y: 0.20823829}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet WALL2_8
+      name: arms and leggs sheet_3
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 381
         y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.505305, y: 0.22628541}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet WALL2_9
+      name: arms and leggs sheet_4
       rect:
         serializedVersion: 2
-        x: 2048
+        x: 508
         y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.478779, y: 0.27441102}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arms and leggs sheet_5
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 0
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.48408425, y: 0.27441102}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arms and leggs sheet_6
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 0
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.55305207, y: 0.7316046}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arms and leggs sheet_7
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 0
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.5212205, y: 0.71957314}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arms and leggs sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1013
+        y: 0
+        width: 127
+        height: 224
+      alignment: 9
+      pivot: {x: 0.56896687, y: 0.7135574}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
