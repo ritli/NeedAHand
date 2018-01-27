@@ -2,53 +2,68 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// NOTE: Needs to be child of a PressurePlate object to work properly
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class CrateOnRails : MonoBehaviour {
 
-    private Vector3 m_startPos;
-    private bool m_acitve = false;
-    private float m_range, m_speed;
+    [Range(0f,25f)]
+    [SerializeField]
+    private float m_range;
+    [SerializeField]
+    private float m_speed;
+    [Range(-1, 1)]
+    [SerializeField]
     private int m_xDir, m_yDir;
+    [SerializeField]
     private bool m_looping;
+
+    private Vector3 m_startPos;
+    [SerializeField]
+    private bool m_acitve = false;
     private bool m_returning = false;
+
+    Rigidbody2D rb;
 
 	// Use this for initialization
 	void Start ()
     {
         m_startPos = transform.position;
+        rb = GetComponent<Rigidbody2D>();
 	}
 	
-	public void Activate(float range, float speed, int xDir, int yDir, bool loop)
+	public void Activate()
     {
         m_acitve = true;
-        m_range = range;
-        m_speed = speed;
-        m_xDir = xDir;
-        m_yDir = yDir;
-        m_looping = loop;
+    }
+
+    public void Deactivate()
+    {
+        m_acitve = false;
     }
 
     void FixedUpdate()
     {
-        /*
         if(m_acitve)
         {
-            Vector3 offset = m_startPos - transform.position;
-            float dist = offset.sqrMagnitude;
-            if(dist<m_range)
+            float dist = Vector3.Distance(m_startPos, transform.position);
+            if((dist < m_range) && !m_returning)
             {
-                gameObject.GetComponent<Rigidbody2D>().velocity = Vector3(m_speed * m_xDir, m_speed * m_yDir, 0f);
+                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0f);
             }
             else if(m_returning && dist > 0.3f)
             {
-                rigidbody.Velocity = Vector3(m_speed * m_xDir * -1, m_speed * m_yDir * -1, 0);
+                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
             }
-            else if(m_looping && ((!m_returning && dist>m_range) || (m_returning && dist<0.3f)))
+            else if(m_looping && ((!m_returning && dist > m_range) || (m_returning && dist < 0.3f)))
             {
                 m_returning = !m_returning;
-                m_returning? rigidbody.velocity = Vector3(m_speed * m_xDir * -1, m_speed * m_yDir * -1, 0):rigidbody.Velocity = Vector3(m_speed * m_xDir, m_speed * m_yDir, 0);
+                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0f) * (m_returning ? 1 : -1);
             }
         }
-        */
     }
 
 
