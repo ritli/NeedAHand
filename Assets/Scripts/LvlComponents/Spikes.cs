@@ -8,7 +8,7 @@ public class Spikes : MonoBehaviour
     {
         if((other.gameObject.GetComponent(typeof(Body)) as Body) != null)
         {
-            GameManager.RespawnPlayer(other.gameObject);
+            GameManager._GetInstance().RespawnPlayer(other.gameObject);
         }
     }
 }
