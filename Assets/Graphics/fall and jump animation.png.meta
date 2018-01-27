@@ -1,13 +1,18 @@
 fileFormatVersion: 2
-guid: a0469612f2f62984890919944fe456eb
-timeCreated: 1517071385
+guid: 9da5fd930c3f8464e931c8cc213fb0c1
+timeCreated: 1517071418
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: animation sheet_0
-    21300002: animation sheet_1
-    21300004: animation sheet_2
-    21300006: animation sheet_3
+    21300000: fall and jump animation_0
+    21300002: fall and jump animation_1
+    21300004: fall and jump animation_2
+    21300006: fall and jump animation_3
+    21300008: fall and jump animation_4
+    21300010: fall and jump animation_5
+    21300012: fall and jump animation_6
+    21300014: fall and jump animation_7
+    21300016: fall and jump animation_8
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -50,7 +55,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 2048
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -82,57 +87,57 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animation sheet_0
+      name: fall and jump animation_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 415
+        width: 2007.75
+        height: 1654
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: animation sheet_1
+      name: fall and jump animation_1
       rect:
         serializedVersion: 2
-        x: 512
+        x: 2007
         y: 0
-        width: 512
-        height: 415
+        width: 2008
+        height: 1654
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: animation sheet_2
+      name: fall and jump animation_2
       rect:
         serializedVersion: 2
-        x: 1024
+        x: 4014
         y: 0
-        width: 512
-        height: 415
+        width: 2007.75
+        height: 1654
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: animation sheet_3
+      name: fall and jump animation_3
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 6023
         y: 0
-        width: 512
-        height: 415
+        width: 2008
+        height: 1654
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

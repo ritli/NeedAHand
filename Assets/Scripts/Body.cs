@@ -44,9 +44,24 @@ public class Body : MonoBehaviour {
     public GameObject armPrefab;
     public GameObject targetPrefab;
 
+    BoxCollider2D collider;
+    Vector2 colliderOffset;
+    Vector2 colliderSize;
+
+    Animator animator;
+
+    GameObject eyes;
+    bool InAir = false;
+
+
     void Start () {
+        animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
+        eyes = transform.Find("Eyes").gameObject;
+        collider = GetComponent<BoxCollider2D>();
+        colliderOffset = collider.offset;
+        colliderSize = collider.size;
     }
 	
     bool OnGround
@@ -59,6 +74,7 @@ public class Body : MonoBehaviour {
 
 	void Update () {
         InputUpdate();
+        AnimationUpdate();
 	}
 
     void Throw()
@@ -109,6 +125,8 @@ public class Body : MonoBehaviour {
 
             float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
 
+            eyes.transform.localPosition = input.normalized * 0.05f;
+
             target.transform.localPosition = input.normalized * 3;
         }
         if (!isActive && target)
@@ -120,6 +138,23 @@ public class Body : MonoBehaviour {
     void ShowLimbs(bool show, bool onlyLegs)
     {
         Vector3 location;
+
+        if (GetLegCount > 0 && show)
+        {
+            animator.SetBool("InAir", true);
+
+            collider.offset = Vector2.Lerp(collider.offset, colliderOffset + Vector2.down * 0.05f, 0.6f);
+            collider.size = Vector2.Lerp(collider.size, colliderSize + Vector2.up * 0.1f, 0.6f);
+            print("Scaling");
+
+        }
+        else
+        {
+            animator.SetBool("InAir", false);
+
+            collider.offset = Vector2.Lerp(collider.offset, colliderOffset, 0.6f);
+            collider.size = Vector2.Lerp(collider.size, colliderSize, 0.6f);
+        }
 
         if (show)
         {
@@ -191,10 +226,42 @@ public class Body : MonoBehaviour {
         jumping = false;
     }
 
+    void AnimationUpdate()
+    {
+        if (!OnGround)
+        {
+            if (!InAir)
+            {
+                InAir = true;
+            }
+
+
+            animator.SetBool("InAir", true);
+        }
+        else
+        {
+            if (InAir)
+            {
+                InAir = false;
+                ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_splash");
+            }
+
+            if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
+            {
+                animator.SetBool("InAir", false);
+            }
+        }
+    }
+
     void InputUpdate()
     {
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
+
+        if (Mathf.Abs(xVelocity) > 0.1f)
+        {
+            eyes.transform.localPosition = xVelocity * Vector2.right * 0.15f;
+        }
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
@@ -206,6 +273,8 @@ public class Body : MonoBehaviour {
 
         if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
+            ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
+
             StartCoroutine(JumpRoutine());
             rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier * (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
         }
@@ -267,6 +336,7 @@ public class Body : MonoBehaviour {
             if (limbs[i].getLimb() == limbtype)
             {
                 limbs.RemoveAt(i);
+                localPositions.RemoveAt(i);
 
                 for (int t = 0; t < transform.childCount; t++)
                 {
@@ -346,6 +416,9 @@ public class Body : MonoBehaviour {
 
         Vector3 randomLoc = Random.insideUnitCircle.normalized;
 
+        bool loop = true;
+
+        while (loop) {
 
         switch (limb)
         {
@@ -374,10 +447,25 @@ public class Body : MonoBehaviour {
         randomLoc = randomLoc.normalized;
         randomLoc.x *= 0.4f;
         randomLoc.y *= 0.25f;
-    
+
+            if (limbs.Count == 0)
+            {
+                loop = false;
+            }
+
+            foreach(Limb l in limbs)
+            {
+                if (Vector2.Distance(l.transform.localPosition, randomLoc) > 0.04f)
+                {
+                    loop = false;
+                }
+            }
+
+        }
+
+
         Vector3 location = randomLoc + transform.position;
         location.z = 0;
-
 
         GameObject g = Instantiate(objectToSpawn, location, Quaternion.Euler(0, 0, Random.Range(0, 360)), transform);
 
