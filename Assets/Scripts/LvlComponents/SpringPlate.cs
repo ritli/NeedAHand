@@ -18,7 +18,8 @@ public class SpringPlate : MonoBehaviour
     private float m_cdProgress = 0;
     private List<Rigidbody2D> m_stiffsOnSpring = new List<Rigidbody2D>();
 
-	void OnTriggerEnter2D(Collider2D other)
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<Rigidbody2D>() != null)
             m_stiffsOnSpring.Add(other.GetComponent<Rigidbody2D>());
@@ -48,6 +49,7 @@ public class SpringPlate : MonoBehaviour
             {
                 foreach (Rigidbody2D rb in m_stiffsOnSpring)
                     rb.AddForce((Vector2.right * springForce * xDir) + (Vector2.up * springForce * yDir));
+                GetComponent<Animator>().SetTrigger("Jump");
                 m_onCooldown = true;
             }
         }
