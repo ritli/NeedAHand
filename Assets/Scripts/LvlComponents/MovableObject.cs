@@ -13,4 +13,21 @@ public class MovableObject : MonoBehaviour
     {
         get { return mass; }
     }
+
+    [Range(0, 10)]
+    public int PowerRequiredToBreak = 1;
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.GetComponent<Limb>())
+        {
+            if (col.collider.GetComponent<Limb>().getThrowForce() >= PowerRequiredToBreak)
+            {
+                ParticleHandler.SpawnParticleSystem(transform.position, "p_cratedeath");
+
+                Destroy(gameObject);
+            }
+        }
+    }
+
 }
