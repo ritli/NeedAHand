@@ -1,12 +1,13 @@
 fileFormatVersion: 2
-guid: b3c59970ee78045459e9359923ef08ad
-timeCreated: 1517012109
+guid: d9c5e021594e6f14e93a342e85b94ee6
+timeCreated: 1517052102
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Floor_0
-    21300002: Floor_1
-    21300004: Floor_2
+    21300000: Spritesheet Corner_0
+    21300002: Spritesheet Corner_1
+    21300004: Spritesheet Corner_2
+    21300006: Spritesheet Corner_3
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -81,7 +82,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Floor_0
+      name: Spritesheet Corner_0
       rect:
         serializedVersion: 2
         x: 0
@@ -95,7 +96,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Floor_1
+      name: Spritesheet Corner_1
       rect:
         serializedVersion: 2
         x: 512
@@ -109,10 +110,24 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Floor_2
+      name: Spritesheet Corner_2
       rect:
         serializedVersion: 2
         x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Spritesheet Corner_3
+      rect:
+        serializedVersion: 2
+        x: 1536
         y: 0
         width: 512
         height: 512
