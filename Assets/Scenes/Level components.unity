@@ -769,6 +769,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2032234048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0ece8e7d4c44b740998ad249df58b0c, type: 3}
+  m_Script: {fileID: 11500000, guid: a2b34fdc0fc5cbf41b9bd035c4b47cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deactivateOnLeave: 0
+  distance: 0
+  moveSpeed: 0
+  xDir: 0
+  yDir: 0
+  loop: 0
