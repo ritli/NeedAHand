@@ -10,16 +10,11 @@ public enum LimbType
 
 public abstract class Limb : MonoBehaviour {
 
-    bool connected;
+    public abstract float getLifetime();
+    public abstract bool getConnected();
+    public abstract void setConnected(bool connected);
+
     LimbType limbtype;
 
     public abstract LimbType getLimb();
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.GetComponent<Body>())
-        {
-            collision.collider.GetComponent<Body>().AddLimb(this);
-        }
-    }
 }
