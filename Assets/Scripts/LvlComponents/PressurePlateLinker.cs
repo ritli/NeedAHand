@@ -10,34 +10,30 @@ public class PressurePlateLinker : MonoBehaviour
     private bool deactivateOnLeave = false, revertOnLeave = false;
 
     private bool m_active = false;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        //bool checkLinked = true;
-        //foreach (PressurePlate plate in linkedPlates)
-        //    checkLinked = plate.Active ? checkLinked : false;
+        if (!m_active || deactivateOnLeave || revertOnLeave)
+        {
+            bool checkLinked = true;
+            foreach (PressurePlate plate in linkedPlates)
+                checkLinked = plate.Active ? checkLinked : false;
 
-        //if(checkLinked != m_active)
-        //{
-        //    if (checkLinked)
-        //        activate();
-        //    else if (deactivateOnLeave || revertOnLeave)
-        //    {
-        //        if (deactivateOnLeave)
-        //            deactivate();
-        //        else
-        //            revert();
-        //    }
-        //}
-
-
-        //m_active = checkLinked;
+            if (checkLinked != m_active)
+            {
+                if (checkLinked)
+                    activate();
+                else if (deactivateOnLeave || revertOnLeave)
+                {
+                    if (deactivateOnLeave)
+                        deactivate();
+                    else
+                        revert();
+                }
+                m_active = checkLinked;
+            }
+        }
     }
 
     private void activate()

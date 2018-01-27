@@ -47,6 +47,8 @@ public class PressurePlate : MonoBehaviour
                 deactivate();
             else if (revertOnLeave)
                 revert();
+            else
+                animator.Play("PressurePlateUp");
         }
         else if (!m_active && massOnTrig >= reqMass)
         {
