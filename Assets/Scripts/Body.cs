@@ -77,6 +77,21 @@ public class Body : MonoBehaviour {
 
             Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
 
+
+            switch (playerID)
+            {
+                case 1:
+                    input = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+                    break;
+                case 2:
+
+                    break;
+
+                default:
+                    break;
+            }
+
             float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
 
             target.transform.localPosition = input.normalized * 3;
@@ -225,8 +240,6 @@ public class Body : MonoBehaviour {
     public void AddLimb(LimbType limb)
     {
         GameObject objectToSpawn = null;
-
-        //print(limb.getLimb());
 
         bool isTrigger = true;
 
