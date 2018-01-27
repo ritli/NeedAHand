@@ -17,7 +17,12 @@ public class CameraController : MonoBehaviour {
 	
 	void Start ()
 	{
-        foreach (Body b in FindObjectsOfType<Body>() )
+        Invoke("DelayedStart", 0.1f);
+	}
+	
+    void DelayedStart()
+    {
+        foreach (Body b in FindObjectsOfType<Body>())
         {
             switch (b.playerID)
             {
@@ -32,8 +37,8 @@ public class CameraController : MonoBehaviour {
                     break;
             }
         }
-	}
-	
+    }
+
 	// Update is called once per frame
 	void Update ()
 	{

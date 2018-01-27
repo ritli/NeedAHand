@@ -8,7 +8,6 @@ using UnityEngine;
 /// </summary>
 public class PressurePlate : MonoBehaviour
 {
-
     [Range(1, 100)]
     [SerializeField]
     private int reqMass = 1;
@@ -17,13 +16,29 @@ public class PressurePlate : MonoBehaviour
 
     private List<GameObject> m_objOnTrigger = new List<GameObject>();
     private bool m_active = false;
+    public bool Active
+    {
+        get { return m_active; }
+    }
+
+    Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
         int massOnTrig = 0;
 
         foreach (GameObject obj in m_objOnTrigger)
-            massOnTrig += obj.GetComponent<Body>().Mass;
+        {
+            if (obj.GetComponent<Body>() != null)
+                massOnTrig += obj.GetComponent<Body>().Mass;
+            else if (obj.GetComponent<MovableObject>() != null)
+                massOnTrig += obj.GetComponent<MovableObject>().Mass;
+        }
 
         if (m_active && massOnTrig < reqMass)
         {
@@ -32,6 +47,8 @@ public class PressurePlate : MonoBehaviour
                 deactivate();
             else if (revertOnLeave)
                 revert();
+            else
+                animator.Play("PressurePlateUp");
         }
         else if (!m_active && massOnTrig >= reqMass)
         {
@@ -42,8 +59,7 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Activation condition?
-        if(other.GetComponent<Body>() != null)
+        if (other.GetComponent<Body>() != null || other.GetComponent<MovableObject>() != null)
         {
             if (!m_objOnTrigger.Contains(other.gameObject))
                 m_objOnTrigger.Add(other.gameObject);
@@ -53,42 +69,46 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<Body>() != null)
+        if (other.GetComponent<Body>() != null || other.GetComponent<MovableObject>() != null)
         {
-            m_objOnTrigger.Remove(other.gameObject);
+            if (m_objOnTrigger.Contains(other.gameObject))
+                m_objOnTrigger.Remove(other.gameObject);
         }
     }
 
     private void activate()
     {
-        foreach(Transform child in transform)
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateDown") && !animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateIdleDown"))
+        {
+            animator.Play("PressurePlateDown");
+        }
+
+        foreach (Transform child in transform)
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Activate();
-            else if (child.GetComponent<Door>() != null)
-                child.GetComponent<Door>().Activate();
         }
     }
 
     private void deactivate()
     {
+        animator.Play("PressurePlateUp");
+
         foreach (Transform child in transform)
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Deactivate();
-            else if (child.GetComponent<Door>() != null)
-                child.GetComponent<Door>().Deactivate();
         }
     }
     
     private void revert()
     {
+        animator.Play("PressurePlateUp");
+
         foreach (Transform child in transform)
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Revert();
-            else if (child.GetComponent<Door>() != null)
-                child.GetComponent<Door>().Revert();
         }
     }
 }

@@ -14,23 +14,28 @@ public class Body : MonoBehaviour {
 
     public float massCompensation = 10f;
 
+    [Header("Jump vars")]
     public float baseJumpForce = 100;
     //Force added per leg
     public float jumpMultiplier = 50;
 
+    [Header("Throw vars")]
     public float throwBaseForce = 10;
     //Force added per arm
     public float throwMultiplier = 5;
 
+    [Header("Movement vars")]
     public float xSpeed = 10;
 
     public LayerMask layermask;
     bool jumping = false;
 
+    public int baseMass = 5;
+
     private int m_mass = 1;
     public int Mass
     {
-        get { return m_mass; }
+        get { return baseMass + GetArmCount + GetLegCount; }
     }
 
     GameObject target;
@@ -52,6 +57,7 @@ public class Body : MonoBehaviour {
 
     GameObject eyes;
     bool InAir = false;
+    float airMultiplier = 1;
 
 
     void Start () {
@@ -68,7 +74,7 @@ public class Body : MonoBehaviour {
     {
         get
         {
-            return Physics2D.Raycast(transform.position + new Vector3(1, -1) * skinWidth, Vector2.down, 0.1f, layermask) || Physics2D.Raycast(transform.position + new Vector3(-1, -1) * skinWidth, Vector2.down, 0.1f, layermask);
+            return Physics2D.Raycast(transform.position + new Vector3(0.5f, -1) * skinWidth, Vector2.down, 0.1f, layermask) || Physics2D.Raycast(transform.position + new Vector3(-0.5f, -1) * skinWidth, Vector2.down, 0.1f, layermask);
         }
     }
 
@@ -145,7 +151,6 @@ public class Body : MonoBehaviour {
 
             collider.offset = Vector2.Lerp(collider.offset, colliderOffset + Vector2.down * 0.05f, 0.6f);
             collider.size = Vector2.Lerp(collider.size, colliderSize + Vector2.up * 0.1f, 0.6f);
-            print("Scaling");
 
         }
         else
@@ -167,6 +172,8 @@ public class Body : MonoBehaviour {
 
                 if (!limbs[i].GetComponent<Collider2D>().enabled)
                 {
+                    limbs[i].GetComponent<Rigidbody2D>().simulated = !onlyLegs;
+                    limbs[i].transform.GetChild(0).GetComponent<Rigidbody2D>().simulated = !onlyLegs;
                     limbs[i].GetComponent<Collider2D>().enabled = true;
                     limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
                 }
@@ -186,6 +193,8 @@ public class Body : MonoBehaviour {
         {
             for (int i = 0; i < limbs.Count; i++)
             {
+
+
                 if (onlyLegs && limbs[i].getLimb() != LimbType.Leg)
                 {
                     continue;
@@ -193,6 +202,9 @@ public class Body : MonoBehaviour {
 
                 if (limbs[i].GetComponent<Collider2D>().enabled)
                 {
+                    limbs[i].GetComponent<Rigidbody2D>().simulated = false;
+                    limbs[i].transform.GetChild(0).GetComponent<Rigidbody2D>().simulated = false;
+
                     limbs[i].GetComponent<Collider2D>().enabled = false;
                     limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
                 }
@@ -265,7 +277,20 @@ public class Body : MonoBehaviour {
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
-            Vector2 vel = (xVelocity * Vector2.right * xSpeed);
+
+            if (InAir)
+            {
+                airMultiplier -= Time.deltaTime;
+                
+            }
+            else
+            {
+                airMultiplier += Time.deltaTime * 4;
+
+            }
+
+            airMultiplier = Mathf.Clamp01(0.25f + airMultiplier);
+            Vector2 vel = (xVelocity * Vector2.right * xSpeed * airMultiplier);
 
             vel.y = rigidbody.velocity.y;
             rigidbody.velocity = vel;
@@ -274,9 +299,9 @@ public class Body : MonoBehaviour {
         if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
             ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
-
+            rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier + (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
+    
             StartCoroutine(JumpRoutine());
-            rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier * (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
         }
 
         if (Input.GetButton("p" + playerID + "Throw"))
@@ -385,7 +410,7 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
-        launchedLimb.GetComponent<Limb>().Throw();
+        launchedLimb.GetComponent<Limb>().Throw(GetArmCount);
 
         Vector2 dir = Vector2.zero;
 
