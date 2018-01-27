@@ -13,4 +13,9 @@ public class Door : MonoBehaviour {
     {
 
     }
+
+    public void Deactivate()
+    {
+
+    }
 }
