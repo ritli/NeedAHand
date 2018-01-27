@@ -56,7 +56,7 @@ public class CrateOnRails : MonoBehaviour
             print(dist.ToString());
             if (m_reverting)
             {
-                if(dist>0.3f)
+                if (dist > 0.3f)
                     rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
                 else
                 {
@@ -86,16 +86,7 @@ public class CrateOnRails : MonoBehaviour
         }
         else
         {
-/*            float dist = Vector3.Distance(m_startPos, transform.position);
-            if (m_returning && dist > 0.3f)
-                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
-            else if (m_returning && dist < 0.3f)
-            {
-                rb.velocity = new Vector3(0, 0, 0);
-                m_returning = false;
-            }
-            else*/
-                rb.velocity = new Vector3(0, 0, 0);
+            rb.velocity = new Vector3(0, 0, 0);
         }
     }
 }
