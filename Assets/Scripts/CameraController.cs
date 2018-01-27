@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
 	public float minSize = 4;
 	public float moveSpeed = 6;
 	public float zoomSpeed = 3;
+	public float minSizeY = 5;
 	public float padding = 5;
 
 	public Transform player1;
@@ -17,7 +18,6 @@ public class CameraController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		
 	}
 	
 	// Update is called once per frame
@@ -42,15 +42,30 @@ public class CameraController : MonoBehaviour {
 	void SetCameraSize()
 	{
 		//Scales the screen to allow both players to be seen
-		float minSizeX = Screen.width / Screen.height;
+		float minSizeX =  Screen.width / Screen.height;
+		float minSizeY = Screen.height / Screen.width;
 
 		//Padding
-		float width = Mathf.Abs((player1.position.x - player2.position.x) + padding) * 0.5f;
-		float height = Mathf.Abs((player1.position.y - player2.position.y) + padding) * 0.5f;
+		float width;
+		float height;
+
+		//special cases for when player1 is south or east to player2
+		if (player1.position.x < player2.position.x)
+			width = Mathf.Abs((player2.position.x - player1.position.x) + padding) * 0.5f;
+		else
+			width = Mathf.Abs((player1.position.x - player2.position.x) + padding) * 0.5f;
+
+		if (player1.position.y < player2.position.y)
+			height = Mathf.Abs((player2.position.y - player1.position.y) + padding) * 0.5f;
+		else
+			height = Mathf.Abs((player1.position.y - player2.position.y) + padding) * 0.5f;
+
 		float camSizeX = Mathf.Max(width, minSizeX);
+		float camSizeY = Mathf.Max(height, minSizeY);
+
 
 		//Interpolate screen size
-		Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, Mathf.Max(height, camSizeX * Screen.height / Screen.width), zoomSpeed * Time.deltaTime);
+		Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, Mathf.Max(height, camSizeX * Screen.height / Screen.width, camSizeY), zoomSpeed * Time.deltaTime);
 		
 		//Limit screen size
 		Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minSize, maxSize);

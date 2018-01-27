@@ -36,6 +36,11 @@ public static class GameManager
         //m_players.Add(player);
     }
 
+    public static void RespawnPlayer(GameObject player)
+    {
+
+    }
+
     // Properties
     #endregion
 
