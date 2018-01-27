@@ -22,6 +22,7 @@ public class SpringPlate : MonoBehaviour
         if (!m_onCooldown && other.GetComponent<Rigidbody2D>() != null)
         {
             other.GetComponent<Rigidbody2D>().AddForce((Vector2.right * springForce * xDir) + (Vector2.up * springForce * yDir));
+            GetComponent<Animator>().SetTrigger("Jump");
             m_onCooldown = true;
         }
     }
