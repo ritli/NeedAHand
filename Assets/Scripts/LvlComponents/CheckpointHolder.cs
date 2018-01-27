@@ -15,6 +15,8 @@ public class CheckpointHolder : MonoBehaviour
                 m_checkpoints.Add(child.GetComponent<Checkpoint>().GetCPData());
         }
 
+        sortCheckpointData();
+
         GameManager._GetInstance().SetCheckpoint(m_checkpoints[0], 1);
         GameManager._GetInstance().SetCheckpoint(m_checkpoints[0], 2);
     }
