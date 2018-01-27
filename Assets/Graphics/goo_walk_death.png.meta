@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: a0469612f2f62984890919944fe456eb
-timeCreated: 1517071385
+guid: 24bf7cc3a56ab4649b3a8c1d7eecc5b6
+timeCreated: 1517071988
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: animation sheet_0
-    21300002: animation sheet_1
-    21300004: animation sheet_2
-    21300006: animation sheet_3
+    21300000: goo_walk_death_0
+    21300002: goo_walk_death_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -50,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 256
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -82,57 +80,29 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animation sheet_0
+      name: goo_walk_death_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 415
+        x: 6
+        y: 7
+        width: 46
+        height: 44
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: animation sheet_1
+      name: goo_walk_death_1
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 512
-        height: 415
+        x: 61
+        y: 1
+        width: 64
+        height: 54
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: animation sheet_2
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 512
-        height: 415
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: animation sheet_3
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 0
-        width: 512
-        height: 415
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
