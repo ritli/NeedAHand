@@ -41,13 +41,11 @@ public class CrateOnRails : MonoBehaviour
     public void Deactivate()
     {
         m_active = false;
-        m_returning = false;
     }
 
     public void Revert()
     {
-        m_active = false;
-        m_returning = true;
+        m_reverting = true;
     }
 
     void FixedUpdate()
@@ -55,32 +53,40 @@ public class CrateOnRails : MonoBehaviour
         if (m_active)
         {
             float dist = Vector3.Distance(m_startPos, transform.position);
-            if ((dist < m_range) && !m_returning)
+            print(dist.ToString());
+            if (m_reverting)
             {
-                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0f);
+                if (dist > 0.3f)
+                    rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
+                else
+                {
+                    rb.velocity = Vector3.zero;
+                    m_active = false;
+                    m_reverting = false;
+                }
             }
-            else if (m_returning && dist > 0.3f)
+            else
             {
-                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
-            }
-            else if (m_looping && ((!m_returning && dist > m_range) || (m_returning && dist < 0.3f)))
-            {
-                m_returning = !m_returning;
-                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0f) * (m_returning ? 1 : -1);
+                if ((dist < m_range) && !m_returning)
+                {
+                    rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0);
+                }
+                else if (m_returning && dist > 0.3f)
+                {
+                    rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
+                }
+                else if (m_looping && ((!m_returning && dist > m_range) || (m_returning && dist < 0.3f)))
+                {
+                    m_returning = !m_returning;
+                    rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * (m_returning ? 1 : -1);
+                }
+                else if (dist > m_range)
+                    rb.velocity = Vector3.zero;
             }
         }
         else
         {
-            float dist = Vector3.Distance(m_startPos, transform.position);
-            if (m_returning && dist > 0.3f)
-                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
-            else if (m_returning && dist < 0.3f)
-            {
-                rb.velocity = new Vector3(0, 0, 0);
-                m_returning = false;
-            }
-            else
-                rb.velocity = new Vector3(0, 0, 0);
+            rb.velocity = new Vector3(0, 0, 0);
         }
     }
 }

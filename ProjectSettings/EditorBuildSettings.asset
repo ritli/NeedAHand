@@ -12,5 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: cfc0ad74a2b1a9e458c0c61d6aa2e108
   - enabled: 1
+    path: Assets/Scenes/tEST.unity
+    guid: 0d51bae97421d0942bdeb0ce80d7d137
+  - enabled: 1
+    path: Assets/Scenes/William.unity
+    guid: a3db010863546f848b894d25073901e3
+  - enabled: 0
     path: Assets/Scenes/BodyScene.unity
     guid: 8f153155771709f40afbf7472cc32563
