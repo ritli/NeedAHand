@@ -68,12 +68,21 @@ public class Body : MonoBehaviour {
         if (!target && isActive)
         {
             target = Instantiate(targetPrefab, transform);
+            target.transform.localPosition = Vector2.zero;
         }
         else if (target)
         {
             target.transform.localPosition = Vector2.up;
 
             Vector2 input = new Vector2(Input.GetAxis("p" + playerID + "Horizontal"), Input.GetAxis("p" + playerID + "Vertical"));
+
+            float deadzone = 0.25f;
+
+            if (input.magnitude < deadzone)
+            {
+                input = Vector2.zero;
+            }
+      
 
             Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
 

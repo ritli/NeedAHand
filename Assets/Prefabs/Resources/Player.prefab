@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4393625956166596}
   - component: {fileID: 61065782307657122}
   - component: {fileID: 114140509654406078}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432525469189120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.78, z: -0.04296875}
+  m_LocalPosition: {x: 4.11, y: -2.74, z: -0.04296875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4393625956166596}
@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5c83a3b6e2cfb4da5499df36c257f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerID: 2
   limbs: []
   baseJumpForce: 10
   jumpMultiplier: 2
