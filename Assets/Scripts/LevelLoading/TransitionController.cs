@@ -69,5 +69,5 @@ public class TransitionController : MonoBehaviour {
 		}
 		isInTransition = false;
 	}
-		//jag gillar furry porr hehehe jk detta är en kodrape (I'll leave this.. for now..) 27/1for
+		//jag gillar furry porr hehehe jk detta är en kodrape (I'll leave this.. for now..) 27/1
 }

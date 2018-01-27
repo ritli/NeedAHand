@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     // Input?
     public void EndLevel()
     {
+		//For now, return to main menu
 		StartCoroutine(TransitionController._GetInstance().Transition(1));
 	}
 
@@ -41,6 +42,14 @@ public class GameManager : MonoBehaviour
     {
         
     }
+	public void SetStartPoint(GameObject point)
+	{
+
+	}
+	public void SetEndPoint(GameObject point)
+	{
+
+	}
 
     public void SpawnPlayers()
     {
