@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Startpoint : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class Startpoint : MonoBehaviour
+{
+    void Start()
+    {
+        GameManager._GetInstance().SetStartPoint(gameObject);
+    }
 }
