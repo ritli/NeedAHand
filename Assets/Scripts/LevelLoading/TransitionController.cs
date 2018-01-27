@@ -8,6 +8,7 @@ public class TransitionController : MonoBehaviour {
 
 	public Image black;
 	public float transitionSpeed;
+	public int m_currentScene;
 	private bool isInTransition = false;
 
 	private static TransitionController m_Instance;
@@ -31,6 +32,7 @@ public class TransitionController : MonoBehaviour {
 		//clear blackplate
 		black.color = Color.clear;
 		black.gameObject.SetActive(true);
+		m_currentScene = 0;
 	}
 
 	public IEnumerator Transition(int index)
@@ -50,15 +52,11 @@ public class TransitionController : MonoBehaviour {
 			yield return null;
 		}
 
+		if(m_currentScene != 0)
+			SceneManager.UnloadSceneAsync(m_currentScene);
 		//loadLevel
-		for(int i = 0; i < SceneManager.sceneCount; i++)
-		{
-			if(SceneManager.GetSceneAt(i).buildIndex != 0)
-			{
-				SceneManager.UnloadSceneAsync(i);
-			}
-		}
 		SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+		m_currentScene = index;
 
 		//transition in
 		for (float f = 1f; f >= 0; f -= transitionSpeed * Time.deltaTime)
