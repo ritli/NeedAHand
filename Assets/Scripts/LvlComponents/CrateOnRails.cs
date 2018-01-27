@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// NOTE: Needs to be child of a PressurePlate object to work properly
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class CrateOnRails : MonoBehaviour
 {
@@ -21,9 +20,9 @@ public class CrateOnRails : MonoBehaviour
     private bool m_looping;
 
     private Vector3 m_startPos;
-    [SerializeField]
-    private bool m_acitve = false;
+    private bool m_active = false;
     private bool m_returning = false;
+    private bool m_reverting = false;
 
     Rigidbody2D rb;
 
@@ -36,17 +35,24 @@ public class CrateOnRails : MonoBehaviour
 	
 	public void Activate()
     {
-        m_acitve = true;
+        m_active = true;
     }
 
     public void Deactivate()
     {
-        m_acitve = false;
+        m_active = false;
+        m_returning = false;
+    }
+
+    public void Revert()
+    {
+        m_active = false;
+        m_returning = true;
     }
 
     void FixedUpdate()
     {
-        if (m_acitve)
+        if (m_active)
         {
             float dist = Vector3.Distance(m_startPos, transform.position);
             if ((dist < m_range) && !m_returning)
@@ -64,6 +70,17 @@ public class CrateOnRails : MonoBehaviour
             }
         }
         else
-            rb.velocity = new Vector3(0, 0, 0);
+        {
+            float dist = Vector3.Distance(m_startPos, transform.position);
+            if (m_returning && dist > 0.3f)
+                rb.velocity = new Vector3(m_speed * m_xDir, m_speed * m_yDir, 0) * -1;
+            else if (m_returning && dist < 0.3f)
+            {
+                rb.velocity = new Vector3(0, 0, 0);
+                m_returning = false;
+            }
+            else
+                rb.velocity = new Vector3(0, 0, 0);
+        }
     }
 }

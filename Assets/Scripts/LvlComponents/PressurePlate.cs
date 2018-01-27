@@ -13,7 +13,7 @@ public class PressurePlate : MonoBehaviour
     [SerializeField]
     private int reqMass = 1;
     [SerializeField]
-    private bool deactivateOnLeave = false;
+    private bool deactivateOnLeave = false, revertOnLeave = false;
 
     private List<GameObject> m_objOnTrigger = new List<GameObject>();
     private bool m_active = false;
@@ -28,7 +28,10 @@ public class PressurePlate : MonoBehaviour
         if (m_active && massOnTrig < reqMass)
         {
             m_active = false;
-            deactivate();
+            if (deactivateOnLeave)
+                deactivate();
+            else if (revertOnLeave)
+                revert();
         }
         else if (!m_active && massOnTrig >= reqMass)
         {
@@ -75,6 +78,17 @@ public class PressurePlate : MonoBehaviour
                 child.GetComponent<CrateOnRails>().Deactivate();
             else if (child.GetComponent<Door>() != null)
                 child.GetComponent<Door>().Deactivate();
+        }
+    }
+    
+    private void revert()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<CrateOnRails>() != null)
+                child.GetComponent<CrateOnRails>().Revert();
+            else if (child.GetComponent<Door>() != null)
+                child.GetComponent<Door>().Revert();
         }
     }
 }
