@@ -15,30 +15,44 @@ public class PressurePlate : MonoBehaviour
     [SerializeField]
     private bool deactivateOnLeave = false;
 
-    private int m_massOnPlate = 0;
+    private List<GameObject> m_objOnTrigger = new List<GameObject>();
+    private bool m_active = false;
+
+    void Update()
+    {
+        int massOnTrig = 0;
+
+        foreach (GameObject obj in m_objOnTrigger)
+            massOnTrig += obj.GetComponent<Body>().Mass;
+
+        if (m_active && massOnTrig < reqMass)
+        {
+            m_active = false;
+            deactivate();
+        }
+        else if (!m_active && massOnTrig >= reqMass)
+        {
+            m_active = true;
+            activate();
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         // Activation condition?
         if(other.GetComponent<Body>() != null)
         {
-            m_massOnPlate += other.GetComponent<Body>().Mass;
+            if (!m_objOnTrigger.Contains(other.gameObject))
+                m_objOnTrigger.Add(other.gameObject);
         }
 
-        if (m_massOnPlate >= reqMass)
-            activate();
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.GetComponent<Body>() != null)
         {
-            m_massOnPlate -= other.GetComponent<Body>().Mass;
-        }
-
-        if (deactivateOnLeave && m_massOnPlate < reqMass)
-        {
-            deactivate();
+            m_objOnTrigger.Remove(other.gameObject);
         }
     }
 
