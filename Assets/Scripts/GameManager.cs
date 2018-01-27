@@ -1,51 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public static class GameManager
+public class GameManager : MonoBehaviour
 {
     #region public
     // Functions
 
-    public static void init()
+	public static GameManager _GetInstance()
+	{
+		return m_Instance;
+	}
+
+	private void Start()
+	{
+		GameManager[] managers = FindObjectsOfType<GameManager>();
+		if (managers.Length < 1)
+		{
+			Destroy(gameObject);
+		}
+		m_Instance = managers[0];
+		Debug.Log("One GameManager is present.");
+	}
+
+	// Input?
+	public void LoadLevel(int levelIndex)
     {
-        
+		StartCoroutine(TransitionController._GetInstance().Transition(levelIndex));
     }
 
     // Input?
-    public static void LoadLevel()
+    public void EndLevel()
     {
-
-    }
-
-    // Input?
-    public static void EndLevel()
-    {
-
-    }
+		StartCoroutine(TransitionController._GetInstance().Transition(1));
+	}
 
     // Input/Output?
-    public static void SetCheckpoint()
+    public void SetCheckpoint()
     {
         
     }
 
-    public static void SpawnPlayers()
+    public void SpawnPlayers()
     {
         //GameObject player = (GameObject)Instantiate(Resources.Load("playerPrefab"));
         //m_players.Add(player);
     }
 
-    public static void RespawnPlayer(GameObject player)
+    public void RespawnPlayer(GameObject player)
     {
 
     }
 
     // Properties
+
     #endregion
 
     #region private
-    private static List<GameObject> m_players = new List<GameObject>();
-    private static object m_currentMap;
+    private List<GameObject> m_players = new List<GameObject>();
+    private object m_currentMap;
+	private static GameManager m_Instance;
+
     #endregion
 }
