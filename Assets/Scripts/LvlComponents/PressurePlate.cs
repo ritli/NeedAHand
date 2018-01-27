@@ -57,28 +57,20 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Activation condition?
-        if(other.GetComponent<Body>() != null)
+        if (other.GetComponent<Body>() != null || other.GetComponent<MovableObject>() != null)
         {
             if (!m_objOnTrigger.Contains(other.gameObject))
                 m_objOnTrigger.Add(other.gameObject);
-        }
-        else if(other.GetComponent<MovableObject>()!=null)
-        {
-            m_objOnTrigger.Add(other.gameObject);
         }
 
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<Body>() != null)
+        if (other.GetComponent<Body>() != null || other.GetComponent<MovableObject>() != null)
         {
-            m_objOnTrigger.Remove(other.gameObject);
-        }
-        else if (other.GetComponent<MovableObject>() != null)
-        {
-            m_objOnTrigger.Remove(other.gameObject);
+            if (m_objOnTrigger.Contains(other.gameObject))
+                m_objOnTrigger.Remove(other.gameObject);
         }
     }
 

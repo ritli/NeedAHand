@@ -36,6 +36,7 @@ public class CrateOnRails : MonoBehaviour
 	public void Activate()
     {
         m_active = true;
+        m_reverting = false;
     }
 
     public void Deactivate()
