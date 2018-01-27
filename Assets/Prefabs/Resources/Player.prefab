@@ -219,7 +219,7 @@ MonoBehaviour:
   localPositions: []
   massCompensation: 0
   baseJumpForce: 10
-  jumpMultiplier: 2
+  jumpMultiplier: 3
   throwBaseForce: 10
   throwMultiplier: 5
   xSpeed: 10
