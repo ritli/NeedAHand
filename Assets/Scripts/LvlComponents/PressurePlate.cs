@@ -23,7 +23,12 @@ public class PressurePlate : MonoBehaviour
         int massOnTrig = 0;
 
         foreach (GameObject obj in m_objOnTrigger)
-            massOnTrig += obj.GetComponent<Body>().Mass;
+        {
+            if (obj.GetComponent<Body>() != null)
+                massOnTrig += obj.GetComponent<Body>().Mass;
+            else if (obj.GetComponent<MovableObject>() != null)
+                massOnTrig += obj.GetComponent<MovableObject>().Mass;
+        }
 
         if (m_active && massOnTrig < reqMass)
         {
@@ -48,12 +53,20 @@ public class PressurePlate : MonoBehaviour
             if (!m_objOnTrigger.Contains(other.gameObject))
                 m_objOnTrigger.Add(other.gameObject);
         }
+        else if(other.GetComponent<MovableObject>()!=null)
+        {
+            m_objOnTrigger.Add(other.gameObject);
+        }
 
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.GetComponent<Body>() != null)
+        {
+            m_objOnTrigger.Remove(other.gameObject);
+        }
+        else if (other.GetComponent<MovableObject>() != null)
         {
             m_objOnTrigger.Remove(other.gameObject);
         }
