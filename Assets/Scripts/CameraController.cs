@@ -15,9 +15,23 @@ public class CameraController : MonoBehaviour {
 	public Transform player2;
 
 	
-	// Use this for initialization
 	void Start ()
 	{
+        foreach (Body b in FindObjectsOfType<Body>() )
+        {
+            switch (b.playerID)
+            {
+                case 1:
+                    player1 = b.transform;
+                    break;
+                case 2:
+                    player2 = b.transform;
+                    break;
+
+                default:
+                    break;
+            }
+        }
 	}
 	
 	// Update is called once per frame

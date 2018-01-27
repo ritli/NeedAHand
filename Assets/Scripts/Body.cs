@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Body : MonoBehaviour {
 
+    [Range(1,2)]
+    public int playerID = 1;
+
     public List<Limb> limbs;
 
     public float baseJumpForce = 100;
@@ -19,11 +22,20 @@ public class Body : MonoBehaviour {
 
     public LayerMask layermask;
 
+    private int m_mass = 1;
+    public int Mass
+    {
+        get { return m_mass; }
+    }
+
+    GameObject target;
+    GameObject throwingArm;
+
     Rigidbody2D rigidbody;
 
     public GameObject legPrefab;
     public GameObject armPrefab;
-
+    public GameObject targetPrefab;
 	// Use this for initialization
 	void Start () {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -34,13 +46,7 @@ public class Body : MonoBehaviour {
     {
         get
         {
-            if (Physics2D.Raycast(transform.position, Vector2.down, 1f, layermask))
-            {
-                print("ONGROUND");
-                return true;
-            }
-
-            return false;
+            return Physics2D.Raycast(transform.position, Vector2.down, 1f, layermask);
         }
     }
 
@@ -49,27 +55,108 @@ public class Body : MonoBehaviour {
         InputUpdate();
 	}
 
+    void Throw()
+    {
+        if (throwingArm)
+        {
+
+        }
+    }
+
+    void ShowTarget(bool isActive)
+    {
+        if (!target && isActive)
+        {
+            target = Instantiate(targetPrefab, transform);
+            target.transform.localPosition = Vector2.zero;
+        }
+        else if (target)
+        {
+            target.transform.localPosition = Vector2.up;
+
+            Vector2 input = new Vector2(Input.GetAxis("p" + playerID + "Horizontal"), Input.GetAxis("p" + playerID + "Vertical"));
+
+            float deadzone = 0.25f;
+
+            if (input.magnitude < deadzone)
+            {
+                input = Vector2.zero;
+            }
+      
+
+            Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
+
+
+            switch (playerID)
+            {
+                case 1:
+                    input = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+                    break;
+                case 2:
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
+
+            target.transform.localPosition = input.normalized * 3;
+        }
+        if (!isActive && target)
+        {
+            Destroy(target);
+        }
+    }
+
     void InputUpdate()
     {
-        float xVelocity = Input.GetAxis("Horizontal");
-        float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0.5f : 0;
+        float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
+        float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
 
-        print(gravityCompensation);
+        if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
+        {
+            transform.Translate(xVelocity * Vector2.right * xSpeed + gravityCompensation * Vector2.up, Space.World);
+        }
 
-        rigidbody.AddForce(xVelocity * Vector2.right * xSpeed + gravityCompensation * Vector2.up, ForceMode2D.Force);
-
-        if (Input.GetButtonDown("Vertical"))
+        if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
             rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier), ForceMode2D.Impulse);
         }
 
+        if (Input.GetButtonDown("p" + playerID + "Throw"))
+        {
+
+        }
+
+        if (Input.GetAxis("p" + playerID + "ThrowTrigger") > 0.5f)
+        {
+            print("Showing target");
+
+            ShowTarget(true);
+
+            if (Input.GetButtonDown("p" + playerID + "Vertical")){
+                ThrowLimb(LimbType.Leg);
+            }
+            if (Input.GetButtonDown("p" + playerID + "Throw"))
+            {
+                ThrowLimb(LimbType.Arm);
+            }
+        }
+        else
+        {
+            ShowTarget(false);
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
-            AddLimb(armPrefab.GetComponent<Limb>());
+            AddLimb(armPrefab.GetComponent<Limb>().getLimb());
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            AddLimb(legPrefab.GetComponent<Limb>());
+            AddLimb(legPrefab.GetComponent<Limb>().getLimb());
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -91,13 +178,17 @@ public class Body : MonoBehaviour {
 
                 for (int t = 0; t < transform.childCount; t++)
                 {
-                    if (transform.GetChild(i).GetComponent<Limb>().getLimb() == limbtype)
-                    {
-                        Destroy(transform.GetChild(i).gameObject);
+                    if (transform.GetChild(t).GetComponent<Limb>()) {
+                        if (transform.GetChild(t).GetComponent<Limb>().getLimb() == limbtype)
+                        {
+                            Destroy(transform.GetChild(t).gameObject);
+
+                            return true;
+                        }
                     }
+                    
                 }
 
-                return true;
             }
         }
 
@@ -132,22 +223,36 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
-        Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Vector2 dir = Vector2.zero;
+
+        switch (playerID)
+        {
+            case 1:
+                dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+                break;
+            case 2:
+                dir =target.transform.position - transform.position;
+
+                break;
+            default:
+                break;
+        }
+
+        launchedLimb.GetComponent<Rigidbody2D>().mass = 1;
 
         launchedLimb.GetComponent<Rigidbody2D>().AddForce(dir.normalized * (throwBaseForce + throwMultiplier * GetArmCount), ForceMode2D.Impulse);
         Destroy(launchedLimb.GetComponent<HingeJoint2D>());
 
     }
 
-    public void AddLimb(Limb limb)
+    public void AddLimb(LimbType limb)
     {
         GameObject objectToSpawn = null;
 
-        limbs.Add(limb);
         bool isTrigger = true;
 
-
-        switch (limb.getLimb())
+        switch (limb)
         {
             case LimbType.Arm:
                 objectToSpawn = armPrefab;                
@@ -168,9 +273,11 @@ public class Body : MonoBehaviour {
         Vector3 offset = transform.position - g.transform.position;
 
         float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-
+        limbs.Add(g.GetComponent<Limb>());
 
         g.transform.rotation = Quaternion.Euler(0, 0, angle + 90);
+
+        g.GetComponent<Limb>().setConnected(true);
 
         g.GetComponent<Rigidbody2D>().gravityScale = 0;
         g.GetComponent<Collider2D>().isTrigger = isTrigger;
@@ -211,4 +318,7 @@ public class Body : MonoBehaviour {
         }
     }
 
+
+
 }
+
