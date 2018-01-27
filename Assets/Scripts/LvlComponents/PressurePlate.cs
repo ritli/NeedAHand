@@ -8,7 +8,6 @@ using UnityEngine;
 /// </summary>
 public class PressurePlate : MonoBehaviour
 {
-
     [Range(1, 100)]
     [SerializeField]
     private int reqMass = 1;
@@ -87,8 +86,6 @@ public class PressurePlate : MonoBehaviour
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Activate();
-            else if (child.GetComponent<Door>() != null)
-                child.GetComponent<Door>().Activate();
         }
     }
 
@@ -100,8 +97,6 @@ public class PressurePlate : MonoBehaviour
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Deactivate();
-            else if (child.GetComponent<Door>() != null)
-                child.GetComponent<Door>().Deactivate();
         }
     }
     
@@ -111,8 +106,6 @@ public class PressurePlate : MonoBehaviour
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Revert();
-            else if (child.GetComponent<Door>() != null)
-                child.GetComponent<Door>().Revert();
         }
     }
 }
