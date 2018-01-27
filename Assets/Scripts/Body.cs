@@ -30,10 +30,12 @@ public class Body : MonoBehaviour {
     public LayerMask layermask;
     bool jumping = false;
 
+    public int baseMass = 5;
+
     private int m_mass = 1;
     public int Mass
     {
-        get { return m_mass; }
+        get { return baseMass + GetArmCount + GetLegCount; }
     }
 
     GameObject target;
@@ -408,7 +410,7 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
-        launchedLimb.GetComponent<Limb>().Throw();
+        launchedLimb.GetComponent<Limb>().Throw(GetArmCount);
 
         Vector2 dir = Vector2.zero;
 

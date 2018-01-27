@@ -84,7 +84,7 @@ public class PressurePlate : MonoBehaviour
 
     private void activate()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateDown") || animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateIdleDown"))
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateDown") && !animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateIdleDown"))
         {
             animator.Play("PressurePlateDown");
         }

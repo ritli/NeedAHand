@@ -6,6 +6,7 @@ public class LegLimb : Limb {
 
     bool connected = false;
     public float spawntime;
+    int throwForce;
 
     // Use this for initialization
     void Start () {
@@ -44,8 +45,10 @@ public class LegLimb : Limb {
         return Time.time - spawntime;
     }
 
-    public override void Throw()
+    public override void Throw(int force)
     {
+        throwForce = force;
+
         foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
         {
             c.enabled = false;
@@ -63,5 +66,10 @@ public class LegLimb : Limb {
         {
             c.enabled = true;
         } 
+    }
+
+    public override int getThrowForce()
+    {
+        return throwForce;
     }
 }
