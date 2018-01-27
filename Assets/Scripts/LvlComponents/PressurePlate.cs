@@ -80,9 +80,12 @@ public class PressurePlate : MonoBehaviour
 
     private void activate()
     {
-        animator.Play("PressurePlateDown");
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateDown") || animator.GetCurrentAnimatorStateInfo(0).IsName("PressurePlateIdleDown"))
+        {
+            animator.Play("PressurePlateDown");
+        }
 
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             if (child.GetComponent<CrateOnRails>() != null)
                 child.GetComponent<CrateOnRails>().Activate();

@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
 		//create players, hide them and store them in m_players
 		m_players = new List<GameObject>();
 
+        if (playerprefab == null)
+        {
+            playerprefab = Resources.Load<GameObject>("Player");
+        }
+
 		GameObject p1 = Instantiate(playerprefab);
 		p1.GetComponent<Body>().playerID = 1;
 		p1.SetActive(false);
@@ -110,6 +115,8 @@ public class GameManager : MonoBehaviour
 
 	public void RespawnPlayer(GameObject player)
     {
+        ParticleHandler.SpawnParticleSystem(player.transform.position, "p_death");
+
 		player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
     }
 
