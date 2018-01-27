@@ -22,7 +22,12 @@ public class GameManager : MonoBehaviour
 	}
 	private void Start()
 	{
-		Debug.Log("initializing game.");
+		Debug.Log("Initializing game.");
+		p1Checkpoint = new CheckpointData();
+		p1Checkpoint.id = -1;
+		p2Checkpoint = new CheckpointData();
+		p2Checkpoint.id = -1;
+
 		//remove additional Managers
 		GameManager[] managers = FindObjectsOfType<GameManager>();
 		if (managers.Length < 1)
@@ -56,18 +61,20 @@ public class GameManager : MonoBehaviour
 	public void LoadLevel(int levelIndex)
     {
 		StartCoroutine(TransitionController._GetInstance().Transition(levelIndex));
+		currentLevelIndex = levelIndex;
     }
 
     // Input?
     public void EndLevel()
     {
 		//For now, return to main menu
-		StartCoroutine(TransitionController._GetInstance().Transition(1));
+		StartCoroutine(TransitionController._GetInstance().Transition(++currentLevelIndex));
 	}
 
     // Input/Output?
     public void SetCheckpoint(CheckpointData point, int playerID)
     {
+		Debug.Log("Sets checkpoint for " + playerID);
 		switch (playerID)
 		{
 			case 1:
@@ -95,13 +102,10 @@ public class GameManager : MonoBehaviour
 	}
 	void OnLevelFinishedLoading(Scene level, LoadSceneMode mode)
 	{
-		Debug.Log("Spawning players");
-
 		if(level.buildIndex != 0 & level.buildIndex != 1)
 		{
-			SpawnPlayers();
+			Invoke("SpawnPlayers", playerSpawnDelay);
 		}
-		//TODO: Place players at start
 	}
 
 	public void RespawnPlayer(GameObject player)
@@ -112,7 +116,7 @@ public class GameManager : MonoBehaviour
 	// Properties
 	public bool startFromMenu = true;
 	public GameObject playerprefab;
-
+	public float playerSpawnDelay;
 	#endregion
 
 	#region private
@@ -120,6 +124,7 @@ public class GameManager : MonoBehaviour
     private object m_currentMap;
 	private CheckpointData p1Checkpoint;
 	private CheckpointData p2Checkpoint;
+	private int currentLevelIndex;
 	private static GameManager m_Instance;
 
     #endregion

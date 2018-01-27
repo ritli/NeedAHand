@@ -30,6 +30,7 @@ public class TransitionController : MonoBehaviour {
 
 		//clear blackplate
 		black.color = Color.clear;
+		black.gameObject.SetActive(true);
 	}
 
 	public IEnumerator Transition(int index)
