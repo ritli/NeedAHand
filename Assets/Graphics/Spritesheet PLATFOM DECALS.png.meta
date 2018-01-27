@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 2da30f12d2f08834e80dcabf6e9f36f3
-timeCreated: 1517092290
+guid: a89cfb214aa9aaa49aa38d579031bab1
+timeCreated: 1517092864
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Check point_0
-    21300002: Check point_1
-    21300004: Check point_2
-    21300006: Check point_3
-    21300008: Check point_4
-    21300010: Check point_5
-    21300012: Check point_6
+    21300000: Spritesheet PLATFOM DECALS_0
+    21300002: Spritesheet PLATFOM DECALS_1
+    21300004: Spritesheet PLATFOM DECALS_2
+    21300006: Spritesheet PLATFOM DECALS_3
+    21300008: Spritesheet PLATFOM DECALS_4
+    21300010: Spritesheet PLATFOM DECALS_5
+    21300012: Spritesheet PLATFOM DECALS_6
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -85,13 +85,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Check point_0
+      name: Spritesheet PLATFOM DECALS_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1024
+        y: 512
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,13 +99,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Check point_1
+      name: Spritesheet PLATFOM DECALS_1
       rect:
         serializedVersion: 2
         x: 512
-        y: 1024
+        y: 512
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -113,13 +113,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Check point_2
+      name: Spritesheet PLATFOM DECALS_2
       rect:
         serializedVersion: 2
         x: 1024
-        y: 1024
+        y: 512
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,13 +127,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Check point_3
+      name: Spritesheet PLATFOM DECALS_3
       rect:
         serializedVersion: 2
         x: 1536
-        y: 1024
+        y: 512
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,13 +141,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Check point_4
+      name: Spritesheet PLATFOM DECALS_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,13 +155,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Check point_5
+      name: Spritesheet PLATFOM DECALS_5
       rect:
         serializedVersion: 2
         x: 512
         y: 0
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,13 +169,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Check point_6
+      name: Spritesheet PLATFOM DECALS_6
       rect:
         serializedVersion: 2
         x: 1024
         y: 0
         width: 512
-        height: 1024
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
