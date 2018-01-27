@@ -20,7 +20,7 @@ public class PlayerTrigger : MonoBehaviour {
         {
             Limb l = collision.GetComponent<Limb>();
 
-            if (!l.getConnected() && l.getLifetime() > 0.5f)
+            if (!l.getConnected() && l.getLifetime() > 0.1f)
             {
                 parent.AddLimb(l.getLimb());
                 Destroy(collision.gameObject);
