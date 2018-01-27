@@ -14,7 +14,10 @@ public class CheckpointHolder : MonoBehaviour
             if (child.GetComponent<Checkpoint>() != null)
                 m_checkpoints.Add(child.GetComponent<Checkpoint>().GetCPData());
         }
-	}
+
+        GameManager._GetInstance().SetCheckpoint(m_checkpoints[0], 1);
+        GameManager._GetInstance().SetCheckpoint(m_checkpoints[0], 2);
+    }
 
     void sortCheckpointData()
     {
@@ -29,7 +32,7 @@ public class CheckpointHolder : MonoBehaviour
 
     public void CheckpointEnter(Vector2 pos, int playerId)
     {
-        //GameManager._GetInstance().SetCheckpoint(m_checkpoints.Find(x => x.pos == pos), playerId)
+        GameManager._GetInstance().SetCheckpoint(m_checkpoints.Find(x => x.pos == pos), playerId);
     }
 
 }

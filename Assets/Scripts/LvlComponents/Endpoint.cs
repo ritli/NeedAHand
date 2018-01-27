@@ -6,12 +6,6 @@ public class Endpoint : MonoBehaviour
 {
     private bool[] m_playersAtGoal = { false, false };
 
-	// Use this for initialization
-	void Start ()
-    {
-        GameManager._GetInstance().SetEndPoint(gameObject);
-	}
-	
 	void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<Body>() != null)

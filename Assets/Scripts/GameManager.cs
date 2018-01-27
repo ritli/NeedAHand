@@ -12,16 +12,44 @@ public class GameManager : MonoBehaviour
 	{
 		return m_Instance;
 	}
-
+	private void OnEnable()
+	{
+		SceneManager.sceneLoaded += OnLevelFinishedLoading;
+	}
+	private void OnDisable()
+	{
+		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+	}
 	private void Start()
 	{
+		Debug.Log("initializing game.");
+		//remove additional Managers
 		GameManager[] managers = FindObjectsOfType<GameManager>();
 		if (managers.Length < 1)
 		{
 			Destroy(gameObject);
 		}
 		m_Instance = managers[0];
-		Debug.Log("One GameManager is present.");
+
+		//start from menu or not
+		if (startFromMenu == true)
+			LoadLevel(1);
+
+
+		//create players, hide them and store them in m_players
+		m_players = new List<GameObject>();
+
+		GameObject p1 = Instantiate(playerprefab);
+		p1.GetComponent<Body>().playerID = 1;
+		p1.SetActive(false);
+		p1.name = "Player1";
+		m_players.Add(p1.gameObject);
+
+		GameObject p2 = Instantiate(playerprefab);
+		p2.GetComponent<Body>().playerID = 2;
+		p2.SetActive(false);
+		p2.name = "Player2";
+		m_players.Add(p2.gameObject);
 	}
 
 	// Input?
@@ -38,37 +66,60 @@ public class GameManager : MonoBehaviour
 	}
 
     // Input/Output?
-    public void SetCheckpoint(GameObject point)
+    public void SetCheckpoint(CheckpointData point, int playerID)
     {
-        
+		switch (playerID)
+		{
+			case 1:
+				if (point.id > p1Checkpoint.id)
+					p1Checkpoint = point;
+				break;
+			case 2:
+				if (point.id > p2Checkpoint.id)
+					p2Checkpoint = point;
+				break;
+		}
     }
-	public void SetStartPoint(GameObject point)
-	{
-
-	}
-	public void SetEndPoint(GameObject point)
-	{
-
-	}
 
     public void SpawnPlayers()
     {
-        //GameObject player = (GameObject)Instantiate(Resources.Load("playerPrefab"));
-        //m_players.Add(player);
-    }
+		m_players.ForEach(player => {
+			player.SetActive(true);
+			RespawnPlayer(player);
+		});
 
-    public void RespawnPlayer(GameObject player)
+		//m_players.ForEach(player =>
+		//{
+		//	RespawnPlayer(player);
+		//});
+	}
+	void OnLevelFinishedLoading(Scene level, LoadSceneMode mode)
+	{
+		Debug.Log("Spawning players");
+
+		if(level.buildIndex != 0 & level.buildIndex != 1)
+		{
+			SpawnPlayers();
+		}
+		//TODO: Place players at start
+	}
+
+	public void RespawnPlayer(GameObject player)
     {
-
+		player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
     }
 
-    // Properties
+	// Properties
+	public bool startFromMenu = true;
+	public GameObject playerprefab;
 
-    #endregion
+	#endregion
 
-    #region private
-    private List<GameObject> m_players = new List<GameObject>();
+	#region private
+	private List<GameObject> m_players = new List<GameObject>();
     private object m_currentMap;
+	private CheckpointData p1Checkpoint;
+	private CheckpointData p2Checkpoint;
 	private static GameManager m_Instance;
 
     #endregion
