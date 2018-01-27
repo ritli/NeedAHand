@@ -10,6 +10,10 @@ public class Body : MonoBehaviour {
 
     public List<Limb> limbs;
 
+    public List<Vector3> localPositions;
+
+    public float massCompensation = 10f;
+
     public float baseJumpForce = 100;
     //Force added per leg
     public float jumpMultiplier = 50;
@@ -21,6 +25,7 @@ public class Body : MonoBehaviour {
     public float xSpeed = 10;
 
     public LayerMask layermask;
+    bool jumping = false;
 
     private int m_mass = 1;
     public int Mass
@@ -112,6 +117,80 @@ public class Body : MonoBehaviour {
         }
     }
 
+    void ShowLimbs(bool show, bool onlyLegs)
+    {
+        Vector3 location;
+
+        if (show)
+        {
+            for (int i = 0; i < limbs.Count; i++)
+            {
+                if (onlyLegs && limbs[i].getLimb() != LimbType.Leg)
+                {
+                    continue;
+                }
+
+                if (!limbs[i].GetComponent<Collider2D>().enabled)
+                {
+                    limbs[i].GetComponent<Collider2D>().enabled = true;
+                    limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
+                }
+                
+                location = Vector3.Lerp(limbs[i].transform.localPosition, localPositions[i], 0.6f);
+                limbs[i].transform.localPosition = location;
+                limbs[i].GetComponent<HingeJoint2D>().connectedAnchor = location;
+                Color color = limbs[i].GetComponent<SpriteRenderer>().color;
+                limbs[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+
+                color.a = Mathf.Lerp(color.a, 1, 0.6f);
+
+                limbs[i].GetComponent<SpriteRenderer>().color = color;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < limbs.Count; i++)
+            {
+                if (onlyLegs && limbs[i].getLimb() != LimbType.Leg)
+                {
+                    continue;
+                }
+
+                if (limbs[i].GetComponent<Collider2D>().enabled)
+                {
+                    limbs[i].GetComponent<Collider2D>().enabled = false;
+                    limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                }
+
+                location = Vector3.Lerp(limbs[i].transform.localPosition, Vector3.zero, 10 * Time.deltaTime);
+
+                Color color = limbs[i].GetComponent<SpriteRenderer>().color;
+                color.a = Mathf.Lerp(color.a, 0, 10 * Time.deltaTime);
+                limbs[i].GetComponent<SpriteRenderer>().color = color;
+                limbs[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+
+                limbs[i].transform.localPosition = location;
+                limbs[i].GetComponent<HingeJoint2D>().connectedAnchor = location;
+            }
+        }
+    }
+
+    IEnumerator JumpRoutine()
+    {
+        jumping = true;
+        float time = 0;
+
+        while (time < 0.4f)
+        {
+            ShowLimbs(true, true);
+
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        jumping = false;
+    }
+
     void InputUpdate()
     {
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
@@ -119,23 +198,30 @@ public class Body : MonoBehaviour {
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
-            transform.Translate(xVelocity * Vector2.right * xSpeed + gravityCompensation * Vector2.up, Space.World);
+            Vector2 vel = (xVelocity * Vector2.right * xSpeed);
+
+            vel.y = rigidbody.velocity.y;
+            rigidbody.velocity = vel;
         }
 
         if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
-            rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier), ForceMode2D.Impulse);
+            StartCoroutine(JumpRoutine());
+            rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier * (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
         }
 
-        if (Input.GetButtonDown("p" + playerID + "Throw"))
+        if (Input.GetButton("p" + playerID + "Throw"))
         {
-
+            //ShowLimbs(true);
+        }
+        else
+        {
+            //ShowLimbs(false);
         }
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") > 0.5f)
         {
-            print("Showing target");
-
+            ShowLimbs(true, false);
             ShowTarget(true);
 
             if (Input.GetButtonDown("p" + playerID + "Vertical")){
@@ -148,6 +234,11 @@ public class Body : MonoBehaviour {
         }
         else
         {
+            if (!jumping)
+            {
+                ShowLimbs(false, false);
+            }
+
             ShowTarget(false);
         }
 
@@ -224,6 +315,8 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
+        launchedLimb.GetComponent<Limb>().Throw();
+
         Vector2 dir = Vector2.zero;
 
         switch (playerID)
@@ -251,37 +344,59 @@ public class Body : MonoBehaviour {
     {
         GameObject objectToSpawn = null;
 
-        bool isTrigger = true;
+        Vector3 randomLoc = Random.insideUnitCircle.normalized;
+
 
         switch (limb)
         {
             case LimbType.Arm:
                 objectToSpawn = armPrefab;                
                 
+                while(randomLoc.y < 0.2)
+                {
+                    randomLoc = Random.insideUnitCircle.normalized;
+                }
+
                 break;
             case LimbType.Leg:
-                isTrigger = true;
+
                 objectToSpawn = legPrefab;
+                while (randomLoc.y > -0.4)
+                {
+                    randomLoc = Random.insideUnitCircle.normalized;
+                }
 
                 break;
             default:
                 break;
         }
 
-        GameObject g = Instantiate(objectToSpawn, (Vector3)Random.onUnitSphere + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)), transform);
+        randomLoc = randomLoc.normalized;
+        randomLoc.x *= 0.4f;
+        randomLoc.y *= 0.25f;
+    
+        Vector3 location = randomLoc + transform.position;
+        location.z = 0;
 
+
+        GameObject g = Instantiate(objectToSpawn, location, Quaternion.Euler(0, 0, Random.Range(0, 360)), transform);
+
+        g.GetComponent<HingeJoint2D>().enabled = true;
+        g.GetComponent<HingeJoint2D>().connectedBody = rigidbody;
+        g.GetComponent<HingeJoint2D>().connectedAnchor = g.transform.localPosition;
+        g.GetComponent<Rigidbody2D>().gravityScale = 1;
 
         Vector3 offset = transform.position - g.transform.position;
 
         float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         limbs.Add(g.GetComponent<Limb>());
+        localPositions.Add(g.transform.localPosition);
 
         g.transform.rotation = Quaternion.Euler(0, 0, angle + 90);
 
         g.GetComponent<Limb>().setConnected(true);
 
-        g.GetComponent<Rigidbody2D>().gravityScale = 0;
-        g.GetComponent<Collider2D>().isTrigger = isTrigger;
+
     }
 
     int GetLegCount

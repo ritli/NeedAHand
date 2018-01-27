@@ -43,4 +43,25 @@ public class LegLimb : Limb {
     {
         return Time.time - spawntime;
     }
+
+    public override void Throw()
+    {
+        foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
+        {
+            c.enabled = false;
+            c.gameObject.layer = LayerMask.NameToLayer("WorldLimb");
+        }
+
+        GetComponent<Animator>().SetBool("Thrown", true);
+
+        Invoke("EnableCollider", 0.1f);
+    }
+
+    void EnableCollider()
+    {
+        foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
+        {
+            c.enabled = true;
+        } 
+    }
 }
