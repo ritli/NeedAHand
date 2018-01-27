@@ -22,6 +22,12 @@ public class Body : MonoBehaviour {
 
     public LayerMask layermask;
 
+    private int m_mass = 1;
+    public int Mass
+    {
+        get { return m_mass; }
+    }
+
     GameObject target;
     GameObject throwingArm;
 
