@@ -52,6 +52,7 @@ public class Body : MonoBehaviour {
 
     GameObject eyes;
     bool InAir = false;
+    float airMultiplier = 1;
 
 
     void Start () {
@@ -68,7 +69,7 @@ public class Body : MonoBehaviour {
     {
         get
         {
-            return Physics2D.Raycast(transform.position + new Vector3(1, -1) * skinWidth, Vector2.down, 0.1f, layermask) || Physics2D.Raycast(transform.position + new Vector3(-1, -1) * skinWidth, Vector2.down, 0.1f, layermask);
+            return Physics2D.Raycast(transform.position + new Vector3(0.5f, -1) * skinWidth, Vector2.down, 0.1f, layermask) || Physics2D.Raycast(transform.position + new Vector3(-0.5f, -1) * skinWidth, Vector2.down, 0.1f, layermask);
         }
     }
 
@@ -145,7 +146,6 @@ public class Body : MonoBehaviour {
 
             collider.offset = Vector2.Lerp(collider.offset, colliderOffset + Vector2.down * 0.05f, 0.6f);
             collider.size = Vector2.Lerp(collider.size, colliderSize + Vector2.up * 0.1f, 0.6f);
-            print("Scaling");
 
         }
         else
@@ -167,6 +167,8 @@ public class Body : MonoBehaviour {
 
                 if (!limbs[i].GetComponent<Collider2D>().enabled)
                 {
+                    limbs[i].GetComponent<Rigidbody2D>().simulated = true;
+                    limbs[i].transform.GetChild(0).GetComponent<Rigidbody2D>().simulated = true;
                     limbs[i].GetComponent<Collider2D>().enabled = true;
                     limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
                 }
@@ -186,6 +188,8 @@ public class Body : MonoBehaviour {
         {
             for (int i = 0; i < limbs.Count; i++)
             {
+
+
                 if (onlyLegs && limbs[i].getLimb() != LimbType.Leg)
                 {
                     continue;
@@ -193,6 +197,9 @@ public class Body : MonoBehaviour {
 
                 if (limbs[i].GetComponent<Collider2D>().enabled)
                 {
+                    limbs[i].GetComponent<Rigidbody2D>().simulated = false;
+                    limbs[i].transform.GetChild(0).GetComponent<Rigidbody2D>().simulated = false;
+
                     limbs[i].GetComponent<Collider2D>().enabled = false;
                     limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
                 }
@@ -265,7 +272,21 @@ public class Body : MonoBehaviour {
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
-            Vector2 vel = (xVelocity * Vector2.right * xSpeed);
+
+            if (InAir)
+            {
+                airMultiplier -= Time.deltaTime;
+                
+            }
+            else
+            {
+                airMultiplier += Time.deltaTime * 4;
+
+            }
+
+            print(airMultiplier);
+            airMultiplier = Mathf.Clamp01(airMultiplier);
+            Vector2 vel = (xVelocity * Vector2.right * xSpeed * airMultiplier);
 
             vel.y = rigidbody.velocity.y;
             rigidbody.velocity = vel;

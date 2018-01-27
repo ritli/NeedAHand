@@ -18,6 +18,13 @@ public class PressurePlate : MonoBehaviour
     private List<GameObject> m_objOnTrigger = new List<GameObject>();
     private bool m_active = false;
 
+    Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     void Update()
     {
         int massOnTrig = 0;
@@ -61,6 +68,8 @@ public class PressurePlate : MonoBehaviour
 
     private void activate()
     {
+        animator.Play("PressurePlateDown");
+
         foreach(Transform child in transform)
         {
             if (child.GetComponent<CrateOnRails>() != null)
@@ -72,6 +81,8 @@ public class PressurePlate : MonoBehaviour
 
     private void deactivate()
     {
+        animator.Play("PressurePlateUp");
+
         foreach (Transform child in transform)
         {
             if (child.GetComponent<CrateOnRails>() != null)
