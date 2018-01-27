@@ -6,6 +6,7 @@ public class ArmLimb : Limb {
 
     float spawntime;
     bool connected = false;
+    Animator animator;
 
     // Use this for initialization
     void Start()
@@ -38,5 +39,24 @@ public class ArmLimb : Limb {
     public override float getLifetime()
     {
         return Time.time - spawntime;
+    }
+
+    public override void Throw()
+    {
+        foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
+        {
+            c.enabled = false;
+            c.gameObject.layer = LayerMask.NameToLayer("WorldLimb");
+        }
+
+        Invoke("EnableCollider", 0.1f);
+    }
+
+    void EnableCollider()
+    {
+        foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
+        {
+            c.enabled = true;
+        }
     }
 }
