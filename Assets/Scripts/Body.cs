@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Body : MonoBehaviour {
 
+    [Range(1,2)]
+    public int playerID = 1;
+
     public List<Limb> limbs;
 
     public float baseJumpForce = 100;
@@ -64,7 +67,7 @@ public class Body : MonoBehaviour {
         {
             target.transform.localPosition = Vector2.up;
 
-            Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector2 input = new Vector2(Input.GetAxis("p" + playerID + "Horizontal"), Input.GetAxis("p" + playerID + "Vertical"));
 
             Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
 
@@ -80,34 +83,34 @@ public class Body : MonoBehaviour {
 
     void InputUpdate()
     {
-        float xVelocity = Input.GetAxis("Horizontal");
+        float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
 
-        if (Input.GetAxis("Fire1") < 0.5f)
+        if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
             transform.Translate(xVelocity * Vector2.right * xSpeed + gravityCompensation * Vector2.up, Space.World);
         }
 
-        if (Input.GetButtonDown("Vertical") && OnGround && Input.GetAxis("Fire1") < 0.5f)
+        if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
             rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier), ForceMode2D.Impulse);
         }
 
-        if (Input.GetButtonDown("Throw"))
+        if (Input.GetButtonDown("p" + playerID + "Throw"))
         {
 
         }
 
-        if (Input.GetAxis("Fire1") > 0.5f)
+        if (Input.GetAxis("p" + playerID + "ThrowTrigger") > 0.5f)
         {
             print("Showing target");
 
             ShowTarget(true);
 
-            if (Input.GetButtonDown("Vertical")){
+            if (Input.GetButtonDown("p" + playerID + "Vertical")){
                 ThrowLimb(LimbType.Leg);
             }
-            if (Input.GetButtonDown("Throw"))
+            if (Input.GetButtonDown("p" + playerID + "Throw"))
             {
                 ThrowLimb(LimbType.Arm);
             }
@@ -190,7 +193,22 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
-        Vector2 dir = target.transform.position - transform.position;
+        Vector2 dir = Vector2.zero;
+
+        switch (playerID)
+        {
+            case 1:
+                dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+                break;
+            case 2:
+                dir =target.transform.position - transform.position;
+
+                break;
+            default:
+                break;
+        }
+
         launchedLimb.GetComponent<Rigidbody2D>().mass = 1;
 
         launchedLimb.GetComponent<Rigidbody2D>().AddForce(dir.normalized * (throwBaseForce + throwMultiplier * GetArmCount), ForceMode2D.Impulse);
