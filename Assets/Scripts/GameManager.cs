@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 	}
 
     // Input/Output?
-    public void SetCheckpoint()
+    public void SetCheckpoint(GameObject point)
     {
         
     }
