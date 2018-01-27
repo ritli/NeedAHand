@@ -14,14 +14,17 @@ public class Body : MonoBehaviour {
 
     public float massCompensation = 10f;
 
+    [Header("Jump vars")]
     public float baseJumpForce = 100;
     //Force added per leg
     public float jumpMultiplier = 50;
 
+    [Header("Throw vars")]
     public float throwBaseForce = 10;
     //Force added per arm
     public float throwMultiplier = 5;
 
+    [Header("Movement vars")]
     public float xSpeed = 10;
 
     public LayerMask layermask;
@@ -167,8 +170,8 @@ public class Body : MonoBehaviour {
 
                 if (!limbs[i].GetComponent<Collider2D>().enabled)
                 {
-                    limbs[i].GetComponent<Rigidbody2D>().simulated = true;
-                    limbs[i].transform.GetChild(0).GetComponent<Rigidbody2D>().simulated = true;
+                    limbs[i].GetComponent<Rigidbody2D>().simulated = !onlyLegs;
+                    limbs[i].transform.GetChild(0).GetComponent<Rigidbody2D>().simulated = !onlyLegs;
                     limbs[i].GetComponent<Collider2D>().enabled = true;
                     limbs[i].transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
                 }
@@ -284,8 +287,7 @@ public class Body : MonoBehaviour {
 
             }
 
-            print(airMultiplier);
-            airMultiplier = Mathf.Clamp01(airMultiplier);
+            airMultiplier = Mathf.Clamp01(0.25f + airMultiplier);
             Vector2 vel = (xVelocity * Vector2.right * xSpeed * airMultiplier);
 
             vel.y = rigidbody.velocity.y;
@@ -295,9 +297,9 @@ public class Body : MonoBehaviour {
         if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
             ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
-
+            rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier + (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
+    
             StartCoroutine(JumpRoutine());
-            rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier * (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
         }
 
         if (Input.GetButton("p" + playerID + "Throw"))
