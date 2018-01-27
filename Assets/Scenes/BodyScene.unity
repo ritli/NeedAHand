@@ -305,6 +305,21 @@ Prefab:
       propertyPath: m_Name
       value: Player (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114973604967255214, guid: 72d39656b9d255a4dbc5800190b085eb,
+        type: 2}
+      propertyPath: playerID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 50696373187354624, guid: 72d39656b9d255a4dbc5800190b085eb,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114973604967255214, guid: 72d39656b9d255a4dbc5800190b085eb,
+        type: 2}
+      propertyPath: skinWidth
+      value: 0.55
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72d39656b9d255a4dbc5800190b085eb, type: 2}
   m_IsPrefabParent: 0
@@ -640,7 +655,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!212 &1134120862
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -836,15 +851,6 @@ Prefab:
     - target: {fileID: 4865510431922704, guid: 72d39656b9d255a4dbc5800190b085eb, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1472881190806276, guid: 72d39656b9d255a4dbc5800190b085eb, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114973604967255214, guid: 72d39656b9d255a4dbc5800190b085eb,
-        type: 2}
-      propertyPath: playerID
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72d39656b9d255a4dbc5800190b085eb, type: 2}

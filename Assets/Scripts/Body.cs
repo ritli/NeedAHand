@@ -33,11 +33,13 @@ public class Body : MonoBehaviour {
 
     Rigidbody2D rigidbody;
 
+    public float skinWidth = 0.25f;
+
     public GameObject legPrefab;
     public GameObject armPrefab;
     public GameObject targetPrefab;
-	// Use this for initialization
-	void Start () {
+
+    void Start () {
         rigidbody = GetComponent<Rigidbody2D>();
 
     }
@@ -46,11 +48,10 @@ public class Body : MonoBehaviour {
     {
         get
         {
-            return Physics2D.Raycast(transform.position, Vector2.down, 1f, layermask);
+            return Physics2D.Raycast(transform.position + new Vector3(1, -1) * skinWidth, Vector2.down, 0.1f, layermask) || Physics2D.Raycast(transform.position + new Vector3(-1, -1) * skinWidth, Vector2.down, 0.1f, layermask);
         }
     }
 
-	// Update is called once per frame
 	void Update () {
         InputUpdate();
 	}
@@ -282,7 +283,6 @@ public class Body : MonoBehaviour {
         g.GetComponent<Rigidbody2D>().gravityScale = 0;
         g.GetComponent<Collider2D>().isTrigger = isTrigger;
     }
-
 
     int GetLegCount
     {
