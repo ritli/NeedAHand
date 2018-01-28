@@ -56,13 +56,15 @@ public class Body : MonoBehaviour {
     public GameObject legPrefab;
     public GameObject armPrefab;
     public GameObject targetPrefab;
+	public GameObject[] moveEffets;
+	
 
     CircleCollider2D collider;
     Vector2 colliderOffset;
     float colliderSize;
 
     Animator animator;
-
+	private ParticleSystem m_MoveEffect;
     GameObject eyes;
     bool growlSoundPlayed = false;
     bool InAir = false;
@@ -71,6 +73,7 @@ public class Body : MonoBehaviour {
     float xMultiplier = 0;
 
     MouthHandler mouth;
+
 
     AudioSource audio;
 
@@ -83,7 +86,15 @@ public class Body : MonoBehaviour {
         if (playerID == 2)
         {
             animator.SetInteger("Blue", 1);
+			m_MoveEffect = Instantiate(moveEffets[1]).GetComponent<ParticleSystem>();
         }
+		else
+		{
+			Debug.Log("Blue effect");
+			m_MoveEffect = Instantiate(moveEffets[0]).GetComponent<ParticleSystem>();
+		}
+		m_MoveEffect.transform.SetParent(gameObject.transform);
+		m_MoveEffect.transform.localPosition = Vector3.zero;
 
         eyes = transform.Find("Eyes").gameObject;
         collider = GetComponent<CircleCollider2D>();
@@ -508,7 +519,7 @@ public class Body : MonoBehaviour {
         }
     }
 
-    bool RemoveLimb(LimbType limbtype)
+    System.Guid RemoveLimb(LimbType limbtype)
     {
         for (int i = 0; i < limbs.Count; i++)
         {
@@ -522,9 +533,10 @@ public class Body : MonoBehaviour {
                     if (transform.GetChild(t).GetComponent<Limb>()) {
                         if (transform.GetChild(t).GetComponent<Limb>().getLimb() == limbtype)
                         {
+                            System.Guid oldId = transform.GetChild(t).GetComponent<Limb>().id;
                             Destroy(transform.GetChild(t).gameObject);
 
-                            return true;
+                            return oldId;
                         }
                     }
                     
@@ -533,15 +545,16 @@ public class Body : MonoBehaviour {
             }
         }
 
-        return false;
+        return System.Guid.Empty;
     }
 
     void ThrowLimb(LimbType limbtype)
     {
         GameObject objectToSpawn = null;
+        System.Guid limbId = RemoveLimb(limbtype);
 
         //If player does not have limb of this type no limb is thrown
-        if (!RemoveLimb(limbtype))
+        if (limbId != System.Guid.Empty)
         {
             print("No limb left of this type");
 
@@ -564,6 +577,7 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
+        launchedLimb.GetComponent<Limb>().id = limbId;
         launchedLimb.GetComponent<Limb>().Throw(GetArmCount);
 
         Vector2 dir = Vector2.zero;

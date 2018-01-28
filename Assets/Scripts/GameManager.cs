@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -113,7 +114,8 @@ public class GameManager : MonoBehaviour
 		m_players.ForEach(player => {
 			player.SetActive(true);
             CheckpointData p = player.GetComponent<Body>().playerID == 1 ? p1Checkpoint : p2Checkpoint;
-            player.GetComponent<Body>().SetStartingLimbs(p.legCount, p.armCount, true);
+            int[] persistintLimbs = killStrayLimbs(player.GetComponent<Body>().playerID);
+            player.GetComponent<Body>().SetStartingLimbs(Mathf.Clamp(p.legCount - persistintLimbs[0], 0, 20), Mathf.Clamp(p.armCount - persistintLimbs[1], 0, 20), true);
             player.transform.position = p.pos;
 		});
 
@@ -152,20 +154,67 @@ public class GameManager : MonoBehaviour
 
     public void TrackLimb(Limb limb)
     {
-        m_trackedLimbs.Add(new KeyValuePair<Limb, int>(limb, limb.gameObject.transform.parent.GetComponent<Body>().playerID));
+        //if (!m_trackedLimbsIds.Contains(limb.id))
+        //    m_trackedLimbsIds.Add(limb.id);
     }
 
-  
+    public void UntrackLimb(Limb l)
+    {
+        if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
+        {
+            m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(x => x.Key == l.id));
+        }
+    }
 
-	private IEnumerator DelaySpawn(GameObject player)
-	{
-		yield return new WaitForSeconds(spawnDelay);
-		player.SetActive(true);
+    private IEnumerator DelaySpawn(GameObject player)
+    {
+        yield return new WaitForSeconds(spawnDelay);
+        player.SetActive(true);
 
         player.GetComponent<Body>().ResetAnimator();
         CheckpointData p = player.GetComponent<Body>().playerID == 1 ? p1Checkpoint : p2Checkpoint;
-        player.GetComponent<Body>().SetStartingLimbs(p.legCount, p.armCount, true);
-	}
+        int[] persistintLimbs = killStrayLimbs(player.GetComponent<Body>().playerID);
+        player.GetComponent<Body>().SetStartingLimbs(Mathf.Clamp(p.legCount - persistintLimbs[0], 0, 20), Mathf.Clamp(p.armCount - persistintLimbs[1], 0, 20), true);
+    }
+
+    /// <param name="playerId"></param>
+    /// <returns>int[legs, arms]</returns>
+    private int[] killStrayLimbs(int playerId)
+    {
+        int[] connectedToAlly = { 0, 0 };
+
+//        Limb[] allLimbs = FindObjectsOfType<Limb>();
+
+//        foreach (Limb l in allLimbs)
+//        {
+//            KeyValuePair<System.Guid, int> imageData;
+//            if (m_trackedLimbsIds.Exists(imageData) && l.transform.parent == null || l.transform.parent.GetComponent<Body>().playerID == playerId)
+//            {
+//                if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
+//                {
+//                    m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(y => y.Key == l.id));
+//                }
+//                Destroy(l.gameObject);
+//            }
+//            else
+//            {
+////if(m_trackedLimbsIds.Exist())
+//                switch (l.getLimb())
+//                {
+//                    case LimbType.Arm:
+//                        connectedToAlly[1]++;
+//                        break;
+//                    case LimbType.Leg:
+//                        connectedToAlly[0]++;
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        }
+
+        return connectedToAlly;
+    }
 
 	// Properties
 	public float spawnDelay = 2;
@@ -176,7 +225,7 @@ public class GameManager : MonoBehaviour
 
 	#region private
 	private List<GameObject> m_players = new List<GameObject>();
-    private List<KeyValuePair<Limb, int>> m_trackedLimbs = new List<KeyValuePair<Limb, int>>();
+    private List<KeyValuePair<System.Guid, int>> m_trackedLimbsIds = new List<KeyValuePair<System.Guid, int>>();
     private object m_currentMap;
 	private CheckpointData p1Checkpoint;
 	private CheckpointData p2Checkpoint;

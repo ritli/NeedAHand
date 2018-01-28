@@ -20,6 +20,7 @@ public class ArmLimb : Limb {
             GetComponent<HingeJoint2D>().connectedBody = transform.parent.GetComponent<Rigidbody2D>();
         }
 
+        id = System.Guid.NewGuid();
         spawntime = Time.time;
     }
 
