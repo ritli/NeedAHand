@@ -107,9 +107,9 @@ public class Body : MonoBehaviour {
             {
                 if (child.GetComponent<Limb>() != null)
                 {
-                    Destroy(child.gameObject);
                     if (limbs.Contains(child.GetComponent<Limb>()))
                         limbs.Remove(child.GetComponent<Limb>());
+                    Destroy(child.gameObject);
                 }
             }
         }
