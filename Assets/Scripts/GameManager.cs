@@ -101,7 +101,9 @@ public class GameManager : MonoBehaviour
     {
 		m_players.ForEach(player => {
 			player.SetActive(true);
-			player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
+            CheckpointData p = player.GetComponent<Body>().playerID == 1 ? p1Checkpoint : p2Checkpoint;
+            player.GetComponent<Body>().SetStartingLimbs(p.legCount, p.armCount, true);
+            player.transform.position = p.pos;
 		});
 
 		//m_players.ForEach(player =>
@@ -141,6 +143,8 @@ public class GameManager : MonoBehaviour
 		player.SetActive(true);
 
         player.GetComponent<Body>().ResetAnimator();
+        CheckpointData p = player.GetComponent<Body>().playerID == 1 ? p1Checkpoint : p2Checkpoint;
+        player.GetComponent<Body>().SetStartingLimbs(p.legCount, p.armCount, true);
 	}
 
 	// Properties

@@ -6,7 +6,8 @@ public class Checkpoint : MonoBehaviour
 {
     [Range(0,999)]
     [SerializeField]
-    int id = -1;
+    int id = -1, leggies = 0, armfeldts = 0;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<Body>() != null)
@@ -18,6 +19,8 @@ public class Checkpoint : MonoBehaviour
         CheckpointData data;
         data.pos = new Vector2(transform.position.x, transform.position.y);
         data.id = id;
+        data.armCount = armfeldts;
+        data.legCount = leggies;
         return data;
     }
 }
