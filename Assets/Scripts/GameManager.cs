@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
     {
 		m_players.ForEach(player => {
 			player.SetActive(true);
-			RespawnPlayer(player);
+			player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
 		});
 
 		//m_players.ForEach(player =>
@@ -119,14 +119,22 @@ public class GameManager : MonoBehaviour
 
 	public void RespawnPlayer(GameObject player)
     {
+	player.gameObject.SetActive(false);
         player.GetComponent<Body>().PlayDeathSound();
-
         ParticleHandler.SpawnParticleSystem(player.transform.position, "p_death");
 
+
 		player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
+		StartCoroutine(DelaySpawn(player));
     }
+	private IEnumerator DelaySpawn(GameObject player)
+	{
+		yield return new WaitForSeconds(spawnDelay);
+		player.SetActive(true);
+	}
 
 	// Properties
+	public float spawnDelay = 2;
 	public bool startFromMenu = true;
 	public GameObject playerprefab;
 	public float playerSpawnDelay;
