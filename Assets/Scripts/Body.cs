@@ -48,6 +48,10 @@ public class Body : MonoBehaviour {
     public AudioClip[] jumpSounds;
     public AudioClip[] landSounds;
     public AudioClip[] deathSounds;
+    public AudioClip[] throwSounds;
+    public AudioClip[] growlSounds;
+    public AudioClip[] bluegrowlSounds;
+
 
     public GameObject legPrefab;
     public GameObject armPrefab;
@@ -60,6 +64,7 @@ public class Body : MonoBehaviour {
     Animator animator;
 
     GameObject eyes;
+    bool growlSoundPlayed = false;
     bool InAir = false;
     float airMultiplier = 1;
 
@@ -70,12 +75,54 @@ public class Body : MonoBehaviour {
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
+        if (playerID == 2)
+        {
+            animator.SetInteger("Blue", 1);
+        }
+
         eyes = transform.Find("Eyes").gameObject;
         collider = GetComponent<BoxCollider2D>();
         colliderOffset = collider.offset;
         colliderSize = collider.size;
     }
 	
+    public void SetStartingLimbs(int LegCount, int ArmCount, bool clearCurrentLimbs)
+    {
+        if (clearCurrentLimbs)
+        {
+            int length = GetArmCount;
+
+            for (int i = 0; i < length; i++)
+            {
+                RemoveLimb(LimbType.Arm);
+            }
+
+            length = GetLegCount;
+
+            for (int i = 0; i < length; i++)
+            {
+                RemoveLimb(LimbType.Leg);
+            }
+        }
+
+        for (int i = 0; i < LegCount; i++)
+        {
+            AddLimb(LimbType.Leg);
+        }
+        for (int i = 0; i < ArmCount; i++)
+        {
+            AddLimb(LimbType.Arm);
+        }
+    }
+
+    public void ResetAnimator()
+    {
+        if (playerID == 2)
+        {
+            animator.SetInteger("Blue", 1);
+        }
+    }
+
     public void PlayDeathSound()
     {
         PlayRandomSound(deathSounds);
@@ -98,14 +145,6 @@ public class Body : MonoBehaviour {
         InputUpdate();
         AnimationUpdate();
 	}
-
-    void Throw()
-    {
-        if (throwingArm)
-        {
-
-        }
-    }
 
     void ShowTarget(bool isActive)
     {
@@ -130,12 +169,13 @@ public class Body : MonoBehaviour {
 
             Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
 
-
             switch (playerID)
             {
                 case 1:
-                    input = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
+                    if (Input.GetJoystickNames().Length < 2)
+                    {
+                        input = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                    }
                     break;
                 case 2:
 
@@ -272,7 +312,18 @@ public class Body : MonoBehaviour {
             {
                 PlayRandomSound(landSounds);
                 InAir = false;
-                ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_splash");
+
+
+
+                if (playerID == 2)
+                {
+                    ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_bluesplash");
+                }
+                else
+                {
+                    ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_splash");
+                }
+
             }
 
             if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
@@ -287,12 +338,17 @@ public class Body : MonoBehaviour {
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
 
+        if (playerID == 2)
+        {
+            print(xVelocity);
+        }
+
         if (Mathf.Abs(xVelocity) > 0.1f)
         {
             eyes.transform.localPosition = xVelocity * Vector2.right * 0.15f;
         }
 
-        if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
+        if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f && Mathf.Abs(xVelocity) > 0.3f)
         {
 
             if (InAir)
@@ -317,7 +373,15 @@ public class Body : MonoBehaviour {
         {
             PlayRandomSound(jumpSounds);
 
-            ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
+
+            if (playerID == 2)
+            {
+                ParticleHandler.SpawnParticleSystem(transform.position, "p_bluejump");
+            }
+            else
+            {
+                ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
+            }
             rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier + (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
     
             StartCoroutine(JumpRoutine());
@@ -334,6 +398,24 @@ public class Body : MonoBehaviour {
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") > 0.5f)
         {
+            if (!growlSoundPlayed)
+            {
+                if (playerID == 2)
+                {
+                    PlayRandomSound(bluegrowlSounds);
+
+                }
+                else
+                {
+                    PlayRandomSound(growlSounds);
+
+                }
+                growlSoundPlayed = true;
+
+                audio.pitch = 1f;
+
+            }
+
             ShowLimbs(true, false);
             ShowTarget(true);
 
@@ -347,6 +429,8 @@ public class Body : MonoBehaviour {
         }
         else
         {
+            growlSoundPlayed = false;
+
             if (!jumping)
             {
                 ShowLimbs(false, false);
@@ -451,6 +535,8 @@ public class Body : MonoBehaviour {
 
         launchedLimb.GetComponent<Rigidbody2D>().AddForce(dir.normalized * (throwBaseForce + throwMultiplier * GetArmCount), ForceMode2D.Impulse);
         Destroy(launchedLimb.GetComponent<HingeJoint2D>());
+
+        PlayRandomSound(throwSounds);
 
     }
 

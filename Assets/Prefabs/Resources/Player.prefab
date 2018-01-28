@@ -284,6 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed76cbb00443c9448424a97c357b224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickup:
+  - {fileID: 8300000, guid: 46a82623dd2e65440b1d5f4b01bf5b86, type: 3}
+  - {fileID: 8300000, guid: 89a5e42bee1dfdc48b358aaf8ab79d0c, type: 3}
 --- !u!114 &114973604967255214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,6 +323,18 @@ MonoBehaviour:
   deathSounds:
   - {fileID: 8300000, guid: 31a2d645c6e4bf741a6a6769222ac9e8, type: 3}
   - {fileID: 8300000, guid: 69e7c01a950b1ee41b4dc877e00bb482, type: 3}
+  throwSounds:
+  - {fileID: 8300000, guid: 1926f341b2ca1b24499d009f195ff435, type: 3}
+  - {fileID: 8300000, guid: 6399c85d6ba9cc94b83867e648b32071, type: 3}
+  - {fileID: 8300000, guid: 76d5ae8e1ac04e84ab1eec796d44835c, type: 3}
+  growlSounds:
+  - {fileID: 8300000, guid: aa0fb79923af6334eb2db06997d306c7, type: 3}
+  - {fileID: 8300000, guid: a98b7e98e1721304b893b3f75e793d19, type: 3}
+  - {fileID: 8300000, guid: b76917c159f7717439e9ad8e90f384f3, type: 3}
+  bluegrowlSounds:
+  - {fileID: 8300000, guid: 8dd0259207c258d48b694da67cd9ceff, type: 3}
+  - {fileID: 8300000, guid: 229d8f2f88fdfc6409443f4b0557ee2e, type: 3}
+  - {fileID: 8300000, guid: 9d56fd60555898647a81cf0912e10f9d, type: 3}
   legPrefab: {fileID: 1286999621508198, guid: 46970c90df357614f9f60b8791726185, type: 2}
   armPrefab: {fileID: 1689915582175948, guid: 0f12bf9af25d9744a8f6ac0c93fb1af9, type: 2}
   targetPrefab: {fileID: 1374145275487176, guid: fad1049455c073048a9a668102ae83e4,
