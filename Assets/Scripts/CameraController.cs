@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour {
 	public Transform player1;
 	public Transform player2;
 
+	private Vector3 targetPos;
 	
 	void Start ()
 	{
@@ -52,13 +53,32 @@ public class CameraController : MonoBehaviour {
 	void MoveCamera()
 	{
 		//Interpolate centerposition with current position
-		Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, GetCenterPosition(), moveSpeed * Time.deltaTime);
+		if (player1.gameObject.activeSelf || player2.gameObject.activeSelf)
+			targetPos = GetCenterPosition();
+		else
+			targetPos = Camera.main.transform.position;
+		Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPos, moveSpeed * Time.deltaTime);
 	}
 	Vector3 GetCenterPosition()
 	{
 		//finds centerpoint between players and oplaces the camera at that position
-		Vector3 centerPoint = player1.position + player2.position;
-		centerPoint *= 0.5f;
+		Vector3 centerPoint = new Vector3();
+		int activePlayers = 0;
+		if (player1.gameObject.activeSelf)
+		{
+			activePlayers++;
+			centerPoint += player1.position;
+		}
+		if (player2.gameObject.activeSelf)
+		{
+			activePlayers++;
+			centerPoint += player2.position;
+		}
+
+		if(activePlayers == 2)
+		{
+			centerPoint *= 0.5f;
+		}
 
 		return new Vector3(centerPoint.x, centerPoint.y, Camera.main.transform.position.z);
 	}
