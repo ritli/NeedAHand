@@ -16,6 +16,10 @@ public class PressurePlate : MonoBehaviour
 
     private List<GameObject> m_objOnTrigger = new List<GameObject>();
     private bool m_active = false;
+    public bool Active
+    {
+        get { return m_active; }
+    }
 
     Animator animator;
 
@@ -43,6 +47,8 @@ public class PressurePlate : MonoBehaviour
                 deactivate();
             else if (revertOnLeave)
                 revert();
+            else
+                animator.Play("PressurePlateUp");
         }
         else if (!m_active && massOnTrig >= reqMass)
         {
@@ -53,28 +59,20 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Activation condition?
-        if(other.GetComponent<Body>() != null)
+        if (other.GetComponent<Body>() != null || other.GetComponent<MovableObject>() != null)
         {
             if (!m_objOnTrigger.Contains(other.gameObject))
                 m_objOnTrigger.Add(other.gameObject);
-        }
-        else if(other.GetComponent<MovableObject>()!=null)
-        {
-            m_objOnTrigger.Add(other.gameObject);
         }
 
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<Body>() != null)
+        if (other.GetComponent<Body>() != null || other.GetComponent<MovableObject>() != null)
         {
-            m_objOnTrigger.Remove(other.gameObject);
-        }
-        else if (other.GetComponent<MovableObject>() != null)
-        {
-            m_objOnTrigger.Remove(other.gameObject);
+            if (m_objOnTrigger.Contains(other.gameObject))
+                m_objOnTrigger.Remove(other.gameObject);
         }
     }
 

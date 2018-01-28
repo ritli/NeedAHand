@@ -20,6 +20,7 @@ public class CrateOnRails : MonoBehaviour
     private bool m_looping;
 
     private Vector3 m_startPos;
+    [SerializeField]
     private bool m_active = false;
     private bool m_returning = false;
     private bool m_reverting = false;
@@ -36,6 +37,7 @@ public class CrateOnRails : MonoBehaviour
 	public void Activate()
     {
         m_active = true;
+        m_reverting = false;
     }
 
     public void Deactivate()
