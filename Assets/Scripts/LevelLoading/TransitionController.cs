@@ -21,7 +21,7 @@ public class TransitionController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		TransitionController[] controllers = FindObjectsOfType<TransitionController>();
-		if (controllers.Length < 1)
+		if (controllers.Length > 1)
 		{
 			Destroy(gameObject);
 		}
