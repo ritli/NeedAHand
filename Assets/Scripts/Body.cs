@@ -56,13 +56,15 @@ public class Body : MonoBehaviour {
     public GameObject legPrefab;
     public GameObject armPrefab;
     public GameObject targetPrefab;
+	public GameObject[] moveEffets;
+	
 
     CircleCollider2D collider;
     Vector2 colliderOffset;
     float colliderSize;
 
     Animator animator;
-
+	private ParticleSystem m_MoveEffect;
     GameObject eyes;
     bool growlSoundPlayed = false;
     bool InAir = false;
@@ -71,6 +73,7 @@ public class Body : MonoBehaviour {
     float xMultiplier = 0;
 
     MouthHandler mouth;
+
 
     AudioSource audio;
 
@@ -83,7 +86,15 @@ public class Body : MonoBehaviour {
         if (playerID == 2)
         {
             animator.SetInteger("Blue", 1);
+			m_MoveEffect = Instantiate(moveEffets[1]).GetComponent<ParticleSystem>();
         }
+		else
+		{
+			Debug.Log("Blue effect");
+			m_MoveEffect = Instantiate(moveEffets[0]).GetComponent<ParticleSystem>();
+		}
+		m_MoveEffect.transform.SetParent(gameObject.transform);
+		m_MoveEffect.transform.localPosition = Vector3.zero;
 
         eyes = transform.Find("Eyes").gameObject;
         collider = GetComponent<CircleCollider2D>();

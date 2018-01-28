@@ -409,9 +409,9 @@ MonoBehaviour:
   limbs: []
   localPositions: []
   massCompensation: 0
-  baseJumpForce: 9.5
+  baseJumpForce: 10
   jumpMultiplier: 3
-  throwBaseForce: 20
+  throwBaseForce: 10
   throwMultiplier: 5
   xSpeed: 6
   layermask:
@@ -446,6 +446,9 @@ MonoBehaviour:
   armPrefab: {fileID: 1689915582175948, guid: 0f12bf9af25d9744a8f6ac0c93fb1af9, type: 2}
   targetPrefab: {fileID: 1374145275487176, guid: fad1049455c073048a9a668102ae83e4,
     type: 2}
+  moveEffets:
+  - {fileID: 1839167965117112, guid: 924cda25eed8b894b81ae61b83c8bedd, type: 2}
+  - {fileID: 1839167965117112, guid: 75d4f99f9cffa6b44beb59614192395b, type: 2}
 --- !u!198 &198203139309612020
 ParticleSystem:
   m_ObjectHideFlags: 1
