@@ -121,10 +121,18 @@ public class GameManager : MonoBehaviour
     {
 	player.gameObject.SetActive(false);
         player.GetComponent<Body>().PlayDeathSound();
-        ParticleHandler.SpawnParticleSystem(player.transform.position, "p_death");
+
+        if (player.GetComponent<Body>().playerID == 2)
+        {
+            ParticleHandler.SpawnParticleSystem(player.transform.position, "p_bluedeath");
+        }
+        else
+        {
+            ParticleHandler.SpawnParticleSystem(player.transform.position, "p_death");
+        }
 
 
-		player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
+        player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
 		StartCoroutine(DelaySpawn(player));
     }
 	private IEnumerator DelaySpawn(GameObject player)

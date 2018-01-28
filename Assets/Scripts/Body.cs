@@ -48,6 +48,8 @@ public class Body : MonoBehaviour {
     public AudioClip[] jumpSounds;
     public AudioClip[] landSounds;
     public AudioClip[] deathSounds;
+    public AudioClip[] throwSounds;
+    public AudioClip[] growlSounds;
 
     public GameObject legPrefab;
     public GameObject armPrefab;
@@ -60,6 +62,7 @@ public class Body : MonoBehaviour {
     Animator animator;
 
     GameObject eyes;
+    bool growlSoundPlayed = false;
     bool InAir = false;
     float airMultiplier = 1;
 
@@ -69,6 +72,11 @@ public class Body : MonoBehaviour {
         audio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
+
+        if (playerID == 2)
+        {
+            animator.SetBool("Blue", true);
+        }
 
         eyes = transform.Find("Eyes").gameObject;
         collider = GetComponent<BoxCollider2D>();
@@ -272,7 +280,18 @@ public class Body : MonoBehaviour {
             {
                 PlayRandomSound(landSounds);
                 InAir = false;
-                ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_splash");
+
+
+
+                if (playerID == 2)
+                {
+                    ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_bluesplash");
+                }
+                else
+                {
+                    ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_splash");
+                }
+
             }
 
             if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
@@ -317,7 +336,15 @@ public class Body : MonoBehaviour {
         {
             PlayRandomSound(jumpSounds);
 
-            ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
+
+            if (playerID == 2)
+            {
+                ParticleHandler.SpawnParticleSystem(transform.position, "p_bluejump");
+            }
+            else
+            {
+                ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
+            }
             rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier + (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
     
             StartCoroutine(JumpRoutine());
@@ -334,6 +361,12 @@ public class Body : MonoBehaviour {
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") > 0.5f)
         {
+            if (!growlSoundPlayed)
+            {
+                PlayRandomSound(growlSounds);
+                growlSoundPlayed = true;
+            }
+
             ShowLimbs(true, false);
             ShowTarget(true);
 
@@ -347,6 +380,8 @@ public class Body : MonoBehaviour {
         }
         else
         {
+            growlSoundPlayed = false;
+
             if (!jumping)
             {
                 ShowLimbs(false, false);
@@ -451,6 +486,8 @@ public class Body : MonoBehaviour {
 
         launchedLimb.GetComponent<Rigidbody2D>().AddForce(dir.normalized * (throwBaseForce + throwMultiplier * GetArmCount), ForceMode2D.Impulse);
         Destroy(launchedLimb.GetComponent<HingeJoint2D>());
+
+        PlayRandomSound(throwSounds);
 
     }
 
