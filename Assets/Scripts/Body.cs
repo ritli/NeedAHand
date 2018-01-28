@@ -56,13 +56,15 @@ public class Body : MonoBehaviour {
     public GameObject legPrefab;
     public GameObject armPrefab;
     public GameObject targetPrefab;
+	public GameObject[] moveEffets;
+	
 
     CircleCollider2D collider;
     Vector2 colliderOffset;
     float colliderSize;
 
     Animator animator;
-
+	private ParticleSystem m_MoveEffect;
     GameObject eyes;
     bool growlSoundPlayed = false;
     bool InAir = false;
@@ -71,6 +73,7 @@ public class Body : MonoBehaviour {
     float xMultiplier = 0;
 
     MouthHandler mouth;
+
 
     AudioSource audio;
 
@@ -83,7 +86,15 @@ public class Body : MonoBehaviour {
         if (playerID == 2)
         {
             animator.SetInteger("Blue", 1);
+			m_MoveEffect = Instantiate(moveEffets[1]).GetComponent<ParticleSystem>();
         }
+		else
+		{
+			Debug.Log("Blue effect");
+			m_MoveEffect = Instantiate(moveEffets[0]).GetComponent<ParticleSystem>();
+		}
+		m_MoveEffect.transform.SetParent(gameObject.transform);
+		m_MoveEffect.transform.localPosition = Vector3.zero;
 
         eyes = transform.Find("Eyes").gameObject;
         collider = GetComponent<CircleCollider2D>();
@@ -100,11 +111,11 @@ public class Body : MonoBehaviour {
 
         for (int i = 0; i < LegCount; i++)
         {
-            AddLimb(LimbType.Leg);
+            GameManager._GetInstance().TrackLimb(AddLimb(LimbType.Leg), playerID);
         }
         for (int i = 0; i < ArmCount; i++)
         {
-            AddLimb(LimbType.Arm);
+            GameManager._GetInstance().TrackLimb(AddLimb(LimbType.Arm), playerID);
         }
     }
 
@@ -598,7 +609,7 @@ public class Body : MonoBehaviour {
 
     }
 
-    public void AddLimb(LimbType limb)
+    public System.Guid AddLimb(LimbType limb)
     {
         GameObject objectToSpawn = null;
 
@@ -683,7 +694,7 @@ public class Body : MonoBehaviour {
 
         g.GetComponent<Limb>().setConnected(true);
 
-
+        return g.GetComponent<Limb>().id;
     }
 
     int GetLegCount

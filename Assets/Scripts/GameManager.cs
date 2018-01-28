@@ -147,6 +147,12 @@ public class GameManager : MonoBehaviour
             m_trackedLimbsIds.Add(new KeyValuePair<System.Guid, int>(limb.id, limb.transform.parent.GetComponent<Body>().playerID));
     }
 
+    public void TrackLimb(System.Guid id, int playerId)
+    {
+        if (!m_trackedLimbsIds.Exists(x => x.Key == id))
+            m_trackedLimbsIds.Add(new KeyValuePair<System.Guid, int>(id, playerId));
+    }
+
     public void UntrackLimb(Limb l)
     {
         if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
