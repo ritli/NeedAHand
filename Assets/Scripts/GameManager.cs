@@ -119,8 +119,11 @@ public class GameManager : MonoBehaviour
 
 	public void RespawnPlayer(GameObject player)
     {
-		player.gameObject.SetActive(false);
-		ParticleHandler.SpawnParticleSystem(player.transform.position, "p_death");
+	player.gameObject.SetActive(false);
+        player.GetComponent<Body>().PlayDeathSound();
+        ParticleHandler.SpawnParticleSystem(player.transform.position, "p_death");
+
+
 		player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
 		StartCoroutine(DelaySpawn(player));
     }
