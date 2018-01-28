@@ -10,6 +10,8 @@ public class PlayerTrigger : MonoBehaviour {
 
     public void Start()
     {
+        
+
         if (transform.parent)
         {
             parent = transform.parent.GetComponent<Body>();
