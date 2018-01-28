@@ -15,21 +15,16 @@ public class CheckpointHolder : MonoBehaviour
                 m_checkpoints.Add(child.GetComponent<Checkpoint>().GetCPData());
         }
 
-        sortCheckpointData();
+        m_checkpoints.OrderBy(p => p.id);
+
+        if (m_checkpoints[0].id < 0)
+        {
+            for (int i = 0; i < 100; i++)
+                print("CHECKPOINT ID < 0. U DUN FUCKED UP BOI.");
+        }
 
         GameManager._GetInstance().SetCheckpoint(m_checkpoints[0], 1);
         GameManager._GetInstance().SetCheckpoint(m_checkpoints[0], 2);
-    }
-
-    void sortCheckpointData()
-    {
-        m_checkpoints.OrderBy(o => o.pos.x);
-        for (int i = 0; i < m_checkpoints.Count; i++)
-        {
-            CheckpointData tmp = m_checkpoints[i];
-            tmp.id = i;
-            m_checkpoints[i] = tmp;
-        }
     }
 
     public void CheckpointEnter(Vector2 pos, int playerId)
