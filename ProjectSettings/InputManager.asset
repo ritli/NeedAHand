@@ -38,7 +38,7 @@ InputManager:
     axis: 1
     joyNum: 1
   - serializedVersion: 3
-    m_Name: p1ThrowTrigger
+    m_Name: p1ThrowTriggerr
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -150,7 +150,7 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: p2ThrowTrigger
+    m_Name: p1ThrowTrigger
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -230,7 +230,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: p1ThrowTrigger
+    m_Name: p2ThrowTrigger
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
