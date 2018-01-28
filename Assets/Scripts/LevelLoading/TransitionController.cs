@@ -51,10 +51,12 @@ public class TransitionController : MonoBehaviour {
 			black.color = c;
 			yield return null;
 		}
+        black.color = new Color(0, 0, 0, 1);
 
+        yield return new WaitForSeconds(0.2f);
 
-		//loadLevel
-		SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+        //loadLevel
+        SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
 
         if (m_currentScene != 0)
             SceneManager.UnloadSceneAsync(m_currentScene);

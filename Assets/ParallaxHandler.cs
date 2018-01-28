@@ -19,6 +19,11 @@ public class ParallaxHandler : MonoBehaviour {
 	}
 	
 	void Update () {
+        if (camera == null)
+        {
+            camera = Camera.main;
+        }
+
         camVelocity = camera.transform.position - cameraLastPos;
 
         cameraLastPos = camera.transform.position;

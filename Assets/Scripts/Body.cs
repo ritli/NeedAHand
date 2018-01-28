@@ -57,9 +57,9 @@ public class Body : MonoBehaviour {
     public GameObject armPrefab;
     public GameObject targetPrefab;
 
-    BoxCollider2D collider;
+    CircleCollider2D collider;
     Vector2 colliderOffset;
-    Vector2 colliderSize;
+    float colliderSize;
 
     Animator animator;
 
@@ -67,6 +67,8 @@ public class Body : MonoBehaviour {
     bool growlSoundPlayed = false;
     bool InAir = false;
     float airMultiplier = 1;
+
+    float xMultiplier = 0;
 
     MouthHandler mouth;
 
@@ -84,9 +86,9 @@ public class Body : MonoBehaviour {
         }
 
         eyes = transform.Find("Eyes").gameObject;
-        collider = GetComponent<BoxCollider2D>();
+        collider = GetComponent<CircleCollider2D>();
         colliderOffset = collider.offset;
-        colliderSize = collider.size;
+        colliderSize = collider.radius;
     }
 	
     public void SetStartingLimbs(int LegCount, int ArmCount, bool clearCurrentLimbs)
@@ -213,7 +215,7 @@ public class Body : MonoBehaviour {
             animator.SetBool("InAir", true);
 
             collider.offset = Vector2.Lerp(collider.offset, colliderOffset + Vector2.down * 0.05f, 0.6f);
-            collider.size = Vector2.Lerp(collider.size, colliderSize + Vector2.up * 0.1f, 0.6f);
+            collider.radius = Mathf.Lerp(collider.radius, colliderSize + 0.1f, 0.6f);
 
         }
         else
@@ -221,7 +223,8 @@ public class Body : MonoBehaviour {
             animator.SetBool("InAir", false);
 
             collider.offset = Vector2.Lerp(collider.offset, colliderOffset, 0.6f);
-            collider.size = Vector2.Lerp(collider.size, colliderSize, 0.6f);
+            collider.radius = Mathf.Lerp(colliderSize + 0.1f, colliderSize, 0.6f);
+
         }
 
         if (show)
@@ -354,17 +357,34 @@ public class Body : MonoBehaviour {
 
         }
 
+
+
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
-
+   
+       
 
 
         if (Mathf.Abs(xVelocity) > 0.1f)
         {
+            xVelocity *= xMultiplier;
+
+            xMultiplier += Time.deltaTime * 4;
+
+
             mouth.transform.localPosition = xVelocity * Vector2.right * 0.10f + Vector2.down * 0.2f;
 
             eyes.transform.localPosition = xVelocity * Vector2.right * 0.15f;
         }
+
+        else
+        {
+            xMultiplier -= Time.deltaTime * 4;
+
+
+        }
+
+        xMultiplier = Mathf.Clamp01(xMultiplier);
 
         if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f && Mathf.Abs(xVelocity) > 0.3f)
         {
@@ -585,7 +605,7 @@ public class Body : MonoBehaviour {
             case LimbType.Leg:
 
                 objectToSpawn = legPrefab;
-                while (randomLoc.y > -0.4)
+                while (randomLoc.y > -0.5)
                 {
                     randomLoc = Random.insideUnitCircle.normalized;
                 }
@@ -596,9 +616,20 @@ public class Body : MonoBehaviour {
         }
 
         randomLoc = randomLoc.normalized;
-        randomLoc.x *= 0.4f;
-        randomLoc.y *= 0.25f;
 
+
+
+            if (limb == LimbType.Leg)
+            {
+                randomLoc.x *= 0.45f;
+
+                randomLoc.y *= 0.35f;
+            }
+            else
+            {
+                randomLoc.x *= 0.4f;
+                randomLoc.y *= 0.25f;
+            }
             if (limbs.Count == 0)
             {
                 loop = false;
