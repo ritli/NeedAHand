@@ -52,7 +52,7 @@ public class LegLimb : Limb {
 
         foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
         {
-            c.enabled = false;
+            //c.enabled = false;
             c.gameObject.layer = LayerMask.NameToLayer("WorldLimb");
         }
 

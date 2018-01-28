@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198828251114972670}
   - component: {fileID: 199949620630785852}
   m_Layer: 0
-  m_Name: p_move
+  m_Name: p_blueMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3373,7 +3373,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b0cce312359fa34fa0e8bd505eecdae, type: 2}
+  - {fileID: 2100000, guid: 8759f77d0e8db1d4180372c6843459e4, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

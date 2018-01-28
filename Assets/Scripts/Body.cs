@@ -555,7 +555,7 @@ public class Body : MonoBehaviour {
         System.Guid limbId = RemoveLimb(limbtype);
 
         //If player does not have limb of this type no limb is thrown
-        if (limbId != System.Guid.Empty)
+        if (limbId == System.Guid.Empty)
         {
             print("No limb left of this type");
 
