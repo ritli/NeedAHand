@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: cfc0ad74a2b1a9e458c0c61d6aa2e108
   - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 3d37332b27e908849aa0e047e3517a36
+  - enabled: 1
     path: Assets/Scenes/MilkBana1.unity
     guid: 8a9b62bea96534b4387c05ef3d3848b3
   - enabled: 1
