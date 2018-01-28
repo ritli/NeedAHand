@@ -109,7 +109,7 @@ public class Body : MonoBehaviour {
         }
         for (int i = 0; i < ArmCount; i++)
         {
-            AddLimb(LimbType.Leg);
+            AddLimb(LimbType.Arm);
         }
     }
 
