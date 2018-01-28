@@ -45,6 +45,10 @@ public class Body : MonoBehaviour {
 
     public float skinWidth = 0.25f;
 
+    public AudioClip[] jumpSounds;
+    public AudioClip[] landSounds;
+    public AudioClip[] deathSounds;
+
     public GameObject legPrefab;
     public GameObject armPrefab;
     public GameObject targetPrefab;
@@ -59,8 +63,10 @@ public class Body : MonoBehaviour {
     bool InAir = false;
     float airMultiplier = 1;
 
+    AudioSource audio;
 
     void Start () {
+        audio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -70,6 +76,16 @@ public class Body : MonoBehaviour {
         colliderSize = collider.size;
     }
 	
+    public void PlayDeathSound()
+    {
+        PlayRandomSound(deathSounds);
+    }
+
+    public void PlayRandomSound(AudioClip[] clips)
+    {
+        audio.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+    }
+
     bool OnGround
     {
         get
@@ -254,6 +270,7 @@ public class Body : MonoBehaviour {
         {
             if (InAir)
             {
+                PlayRandomSound(landSounds);
                 InAir = false;
                 ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_splash");
             }
@@ -298,6 +315,8 @@ public class Body : MonoBehaviour {
 
         if (Input.GetButtonDown("p" + playerID + "Vertical") && OnGround && Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
         {
+            PlayRandomSound(jumpSounds);
+
             ParticleHandler.SpawnParticleSystem(transform.position, "p_jump");
             rigidbody.AddForce(Vector2.up * (baseJumpForce + GetLegCount * jumpMultiplier + (GetLegCount + GetArmCount) * massCompensation), ForceMode2D.Impulse);
     
