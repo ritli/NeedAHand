@@ -26,7 +26,7 @@ public class Checkpoint : MonoBehaviour
 
     void SetState(int i)
     {
-        if (state == 1 || state == 2)
+        if ((state == 1 && i == 2) || (state == 2 && i == 1))
         {
             i = 3;
         }
