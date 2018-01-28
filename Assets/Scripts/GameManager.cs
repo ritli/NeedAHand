@@ -121,7 +121,8 @@ public class GameManager : MonoBehaviour
 
 	public void RespawnPlayer(GameObject player)
     {
-	player.gameObject.SetActive(false);
+		Camera.main.GetComponent<CameraController>().StartShake();
+		player.gameObject.SetActive(false);
         player.GetComponent<Body>().PlayDeathSound();
 
         if (player.GetComponent<Body>().playerID == 2)

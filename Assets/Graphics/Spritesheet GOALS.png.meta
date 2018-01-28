@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: 5676867d882681041884505cbca13115
-timeCreated: 1517105815
+guid: 272954103ba6b9e42887db564250af90
+timeCreated: 1517108103
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Spritesheet DOOR_0
-    21300002: Spritesheet DOOR_1
-    21300004: Spritesheet DOOR_2
-    21300006: Spritesheet DOOR_3
+    21300000: Spritesheet GOALS_0
+    21300002: Spritesheet GOALS_1
+    21300004: Spritesheet GOALS_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -82,13 +81,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spritesheet DOOR_0
+      name: Spritesheet GOALS_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 512
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -96,27 +95,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet DOOR_1
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Spritesheet DOOR_2
+      name: Spritesheet GOALS_1
       rect:
         serializedVersion: 2
         x: 1024
         y: 0
-        width: 512
-        height: 512
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,13 +109,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet DOOR_3
+      name: Spritesheet GOALS_2
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 2048
         y: 0
-        width: 512
-        height: 512
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
