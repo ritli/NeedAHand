@@ -158,6 +158,18 @@ public class Body : MonoBehaviour {
         {
             target = Instantiate(targetPrefab, transform);
             target.transform.localPosition = Vector2.zero;
+
+            switch (playerID)
+            {
+                case 1:
+                    target.GetComponent<SpriteRenderer>().color = Color.green;
+                    break;
+                case 2:
+                    target.GetComponent<SpriteRenderer>().color = Color.blue;
+                    break;
+                default:
+                    break;
+            }
         }
         else if (target)
         {
@@ -195,8 +207,6 @@ public class Body : MonoBehaviour {
 
             eyes.transform.localPosition = input.normalized * 0.05f;
             mouth.transform.localPosition = input.normalized * 0.03f  + Vector2.down * 0.2f;
-
-
 
             target.transform.localPosition = input.normalized * 3;
         }
@@ -558,19 +568,22 @@ public class Body : MonoBehaviour {
 
         Vector2 dir = Vector2.zero;
 
-        switch (playerID)
-        {
-            case 1:
-                dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        dir = target.transform.position - transform.position;
 
-                break;
-            case 2:
-                dir =target.transform.position - transform.position;
-
-                break;
-            default:
-                break;
-        }
+// 
+//         switch (playerID)
+//         {
+//             case 1:
+//                 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+// 
+//                 break;
+//             case 2:
+//                 dir = target.transform.position - transform.position;
+// 
+//                 break;
+//             default:
+//                 break;
+//         }
 
         launchedLimb.GetComponent<Rigidbody2D>().mass = 1;
 
