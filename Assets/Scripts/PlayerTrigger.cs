@@ -34,6 +34,7 @@ public class PlayerTrigger : MonoBehaviour {
             {
                 PlayRandomSound(pickup);
 
+                l.id = collision.gameObject.GetComponent<Limb>().id;
                 parent.AddLimb(l.getLimb());
                 Destroy(collision.gameObject);
             }

@@ -409,9 +409,9 @@ MonoBehaviour:
   limbs: []
   localPositions: []
   massCompensation: 0
-  baseJumpForce: 10
+  baseJumpForce: 9.5
   jumpMultiplier: 3
-  throwBaseForce: 10
+  throwBaseForce: 20
   throwMultiplier: 5
   xSpeed: 6
   layermask:
