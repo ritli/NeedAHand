@@ -75,7 +75,7 @@ public class Body : MonoBehaviour {
 
         if (playerID == 2)
         {
-            animator.SetBool("Blue", true);
+            animator.SetInteger("Blue", 1);
         }
 
         eyes = transform.Find("Eyes").gameObject;
@@ -84,6 +84,43 @@ public class Body : MonoBehaviour {
         colliderSize = collider.size;
     }
 	
+    public void SetStartingLimbs(int LegCount, int ArmCount, bool clearCurrentLimbs)
+    {
+        if (clearCurrentLimbs)
+        {
+            int length = GetArmCount;
+
+            for (int i = 0; i < length; i++)
+            {
+                RemoveLimb(LimbType.Arm);
+            }
+
+            length = GetLegCount;
+
+            for (int i = 0; i < length; i++)
+            {
+                RemoveLimb(LimbType.Leg);
+            }
+        }
+
+        for (int i = 0; i < LegCount; i++)
+        {
+            AddLimb(LimbType.Leg);
+        }
+        for (int i = 0; i < ArmCount; i++)
+        {
+            AddLimb(LimbType.Leg);
+        }
+    }
+
+    public void ResetAnimator()
+    {
+        if (playerID == 2)
+        {
+            animator.SetInteger("Blue", 1);
+        }
+    }
+
     public void PlayDeathSound()
     {
         PlayRandomSound(deathSounds);
@@ -106,14 +143,6 @@ public class Body : MonoBehaviour {
         InputUpdate();
         AnimationUpdate();
 	}
-
-    void Throw()
-    {
-        if (throwingArm)
-        {
-
-        }
-    }
 
     void ShowTarget(bool isActive)
     {
@@ -138,12 +167,13 @@ public class Body : MonoBehaviour {
 
             Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
 
-
             switch (playerID)
             {
                 case 1:
-                    input = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
+                    if (Input.GetJoystickNames().Length < 2)
+                    {
+                        input = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                    }
                     break;
                 case 2:
 
@@ -306,12 +336,17 @@ public class Body : MonoBehaviour {
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
 
+        if (playerID == 2)
+        {
+            print(xVelocity);
+        }
+
         if (Mathf.Abs(xVelocity) > 0.1f)
         {
             eyes.transform.localPosition = xVelocity * Vector2.right * 0.15f;
         }
 
-        if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f)
+        if (Input.GetAxis("p" + playerID + "ThrowTrigger") < 0.5f && Mathf.Abs(xVelocity) > 0.3f)
         {
 
             if (InAir)

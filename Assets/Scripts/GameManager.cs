@@ -139,6 +139,8 @@ public class GameManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(spawnDelay);
 		player.SetActive(true);
+
+        player.GetComponent<Body>().ResetAnimator();
 	}
 
 	// Properties
