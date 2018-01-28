@@ -154,7 +154,7 @@ Prefab:
     - target: {fileID: 114526704521690744, guid: 194c32519953b8b4da84691fe1b51718,
         type: 2}
       propertyPath: maxSize
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114526704521690744, guid: 194c32519953b8b4da84691fe1b51718,
         type: 2}

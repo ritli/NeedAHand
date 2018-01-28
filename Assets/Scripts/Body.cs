@@ -68,9 +68,12 @@ public class Body : MonoBehaviour {
     bool InAir = false;
     float airMultiplier = 1;
 
+    MouthHandler mouth;
+
     AudioSource audio;
 
     void Start () {
+        mouth = GetComponentInChildren<MouthHandler>();
         audio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
@@ -197,6 +200,9 @@ public class Body : MonoBehaviour {
             float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
 
             eyes.transform.localPosition = input.normalized * 0.05f;
+            mouth.transform.localPosition = input.normalized * 0.03f  + Vector2.down * 0.2f;
+
+
 
             target.transform.localPosition = input.normalized * 3;
         }
@@ -359,13 +365,12 @@ public class Body : MonoBehaviour {
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
 
-        if (playerID == 2)
-        {
-            print(xVelocity);
-        }
+
 
         if (Mathf.Abs(xVelocity) > 0.1f)
         {
+            mouth.transform.localPosition = xVelocity * Vector2.right * 0.10f + Vector2.down * 0.2f;
+
             eyes.transform.localPosition = xVelocity * Vector2.right * 0.15f;
         }
 
@@ -431,6 +436,9 @@ public class Body : MonoBehaviour {
                     PlayRandomSound(growlSounds);
 
                 }
+
+                mouth.OpenMouth();
+
                 growlSoundPlayed = true;
 
                 audio.pitch = 1f;
