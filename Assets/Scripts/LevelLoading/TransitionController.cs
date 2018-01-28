@@ -52,11 +52,15 @@ public class TransitionController : MonoBehaviour {
 			yield return null;
 		}
 
-		if(m_currentScene != 0)
-			SceneManager.UnloadSceneAsync(m_currentScene);
+
 		//loadLevel
 		SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
-		m_currentScene = index;
+
+        if (m_currentScene != 0)
+            SceneManager.UnloadSceneAsync(m_currentScene);
+        m_currentScene = index;
+
+        yield return new WaitForSeconds(1);
 
 		//transition in
 		for (float f = 1f; f >= 0; f -= transitionSpeed * Time.deltaTime)
@@ -66,7 +70,9 @@ public class TransitionController : MonoBehaviour {
 			black.color = c;
 			yield return null;
 		}
-		isInTransition = false;
+
+        black.color = new Color(0, 0, 0, 0);
+        isInTransition = false;
 	}
 		//jag gillar furry porr hehehe jk detta är en kodrape (I'll leave this.. for now..) 27/1
 }

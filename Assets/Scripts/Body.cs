@@ -344,6 +344,18 @@ public class Body : MonoBehaviour {
 
     void InputUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.F1) && playerID == 1)
+        {
+            GameManager._GetInstance().LoadLevel(2);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2) && playerID == 1)
+        {
+            GameManager._GetInstance().LoadLevel(3);
+
+        }
+
         float xVelocity = Input.GetAxis("p" + playerID + "Horizontal");
         float gravityCompensation = OnGround ? -Physics2D.gravity.y * 0f : 0;
 

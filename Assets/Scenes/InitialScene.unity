@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDelay: 2
-  startFromMenu: 0
+  startFromMenu: 1
   playerprefab: {fileID: 1432525469189120, guid: 72d39656b9d255a4dbc5800190b085eb,
     type: 2}
   playerSpawnDelay: 0.37
