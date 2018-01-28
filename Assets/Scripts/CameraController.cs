@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour
+{
 
-    public float maxSize = 8;
+	public float maxSize = 8;
 	public float minSize = 4;
 	public float moveSpeed = 6;
 	public float zoomSpeed = 3;
@@ -13,39 +14,41 @@ public class CameraController : MonoBehaviour {
 
 	public Transform player1;
 	public Transform player2;
-
+	[Range(0, 0.4f)]
+	public float shakeForce;
+	public float shakeTime;
 	private Vector3 targetPos;
-	
-	void Start ()
+
+	void Start()
 	{
-        //Invoke("DelayedStart", 0.1f);
+		//Invoke("DelayedStart", 0.1f);
 		List<GameObject> players = GameManager._GetInstance().GetPlayers();
 		player1 = players[0].transform;
 		player2 = players[1].transform;
 
 	}
-	
-    void DelayedStart()
-    {
-        foreach (Body b in FindObjectsOfType<Body>())
-        {
-            switch (b.playerID)
-            {
-                case 1:
-                    player1 = b.transform;
-                    break;
-                case 2:
-                    player2 = b.transform;
-                    break;
 
-                default:
-                    break;
-            }
-        }
-    }
+	void DelayedStart()
+	{
+		foreach (Body b in FindObjectsOfType<Body>())
+		{
+			switch (b.playerID)
+			{
+				case 1:
+					player1 = b.transform;
+					break;
+				case 2:
+					player2 = b.transform;
+					break;
+
+				default:
+					break;
+			}
+		}
+	}
 
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
 		MoveCamera();
 		SetCameraSize();
@@ -75,7 +78,7 @@ public class CameraController : MonoBehaviour {
 			centerPoint += player2.position;
 		}
 
-		if(activePlayers == 2)
+		if (activePlayers == 2)
 		{
 			centerPoint *= 0.5f;
 		}
@@ -85,7 +88,7 @@ public class CameraController : MonoBehaviour {
 	void SetCameraSize()
 	{
 		//Scales the screen to allow both players to be seen
-		float minSizeX =  Screen.width / Screen.height;
+		float minSizeX = Screen.width / Screen.height;
 		float minSizeY = Screen.height / Screen.width;
 
 		//Padding
@@ -109,8 +112,33 @@ public class CameraController : MonoBehaviour {
 
 		//Interpolate screen size
 		Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, Mathf.Max(height, camSizeX * Screen.height / Screen.width, camSizeY), zoomSpeed * Time.deltaTime);
-		
+
 		//Limit screen size
 		Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minSize, maxSize);
+	}
+	public void StartShake()
+	{
+		StartCoroutine(ShakeScreen(shakeForce, shakeTime));
+	}
+	private IEnumerator ShakeScreen(float maxVector, float shakeTime)
+	{
+		Debug.Log("Shaking");
+		float time = shakeTime;
+
+		for (;;)
+		{
+			Vector3 rndVector = new Vector3(Random.Range(2, -2), Random.Range(-1, 1), 0);
+			rndVector *= maxVector;
+
+			Camera.main.transform.position += rndVector;
+
+			if (shakeTime < 0)
+			{
+				yield break;
+			}
+			shakeTime -= Time.deltaTime;
+
+			yield return null;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7985fac22b06aea42a1b7998429ceecc
-timeCreated: 1517103222
+timeCreated: 1517104955
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,13 +65,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 1024
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -107,9 +107,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7680
-        width: 2560
-        height: 2560
+        y: 8192
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,10 +120,10 @@ TextureImporter:
       name: BAKGRUND_1
       rect:
         serializedVersion: 2
-        x: 2560
-        y: 7680
-        width: 2560
-        height: 2560
+        x: 2048
+        y: 8192
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: BAKGRUND_2
       rect:
         serializedVersion: 2
-        x: 5120
-        y: 7680
-        width: 2560
-        height: 2560
+        x: 4096
+        y: 8192
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: BAKGRUND_3
       rect:
         serializedVersion: 2
-        x: 7680
-        y: 7680
-        width: 2560
-        height: 2560
+        x: 6144
+        y: 8192
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,10 +162,10 @@ TextureImporter:
       name: BAKGRUND_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 5120
-        width: 2560
-        height: 2560
+        x: 8192
+        y: 8192
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,10 +176,10 @@ TextureImporter:
       name: BAKGRUND_5
       rect:
         serializedVersion: 2
-        x: 2560
-        y: 5120
-        width: 2560
-        height: 2560
+        x: 0
+        y: 6144
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +190,10 @@ TextureImporter:
       name: BAKGRUND_6
       rect:
         serializedVersion: 2
-        x: 5120
-        y: 5120
-        width: 2560
-        height: 2560
+        x: 2048
+        y: 6144
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,10 +204,10 @@ TextureImporter:
       name: BAKGRUND_7
       rect:
         serializedVersion: 2
-        x: 7680
-        y: 5120
-        width: 2560
-        height: 2560
+        x: 4096
+        y: 6144
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: BAKGRUND_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 2560
-        width: 2560
-        height: 2560
+        x: 6144
+        y: 6144
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +232,10 @@ TextureImporter:
       name: BAKGRUND_9
       rect:
         serializedVersion: 2
-        x: 2560
-        y: 2560
-        width: 2560
-        height: 2560
+        x: 8192
+        y: 6144
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,10 +246,10 @@ TextureImporter:
       name: BAKGRUND_10
       rect:
         serializedVersion: 2
-        x: 5120
-        y: 2560
-        width: 2560
-        height: 2560
+        x: 0
+        y: 4096
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,10 +260,10 @@ TextureImporter:
       name: BAKGRUND_11
       rect:
         serializedVersion: 2
-        x: 7680
-        y: 2560
-        width: 2560
-        height: 2560
+        x: 2048
+        y: 4096
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,10 +274,10 @@ TextureImporter:
       name: BAKGRUND_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2560
-        height: 2560
+        x: 4096
+        y: 4096
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,10 +288,10 @@ TextureImporter:
       name: BAKGRUND_13
       rect:
         serializedVersion: 2
-        x: 2560
-        y: 0
-        width: 2560
-        height: 2560
+        x: 6144
+        y: 4096
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +302,10 @@ TextureImporter:
       name: BAKGRUND_14
       rect:
         serializedVersion: 2
-        x: 5120
-        y: 0
-        width: 2560
-        height: 2560
+        x: 8192
+        y: 4096
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -316,10 +316,136 @@ TextureImporter:
       name: BAKGRUND_15
       rect:
         serializedVersion: 2
-        x: 7680
+        x: 0
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_16
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_17
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_18
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_19
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_20
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
-        width: 2560
-        height: 2560
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_21
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_22
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_23
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BAKGRUND_24
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 0
+        width: 2048
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
