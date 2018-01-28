@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 61965089338979078}
   - component: {fileID: 212705399391941714}
   - component: {fileID: 95874204092523904}
+  - component: {fileID: 82563700655377950}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -175,6 +176,86 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6}
   m_EdgeRadius: 0
+--- !u!82 &82563700655377950
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432525469189120}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95874204092523904
 Animator:
   serializedVersion: 3
@@ -226,7 +307,19 @@ MonoBehaviour:
   layermask:
     serializedVersion: 2
     m_Bits: 513
+  baseMass: 5
   skinWidth: 0.45
+  jumpSounds:
+  - {fileID: 8300000, guid: 09ab1eb30ababbe44ab8d7b903b66790, type: 3}
+  - {fileID: 8300000, guid: ac2c4aa39bb0b4c4aaf97fd5723267b0, type: 3}
+  - {fileID: 8300000, guid: 70012e915c050db46b4161ea96989fdc, type: 3}
+  landSounds:
+  - {fileID: 8300000, guid: 4183ee2eb2353fe4981b64345992217a, type: 3}
+  - {fileID: 8300000, guid: 739218ed9fb7bd84eb762f7f3dd43040, type: 3}
+  - {fileID: 8300000, guid: b9334591c915b354898f73b6aeb24c6d, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 31a2d645c6e4bf741a6a6769222ac9e8, type: 3}
+  - {fileID: 8300000, guid: 69e7c01a950b1ee41b4dc877e00bb482, type: 3}
   legPrefab: {fileID: 1286999621508198, guid: 46970c90df357614f9f60b8791726185, type: 2}
   armPrefab: {fileID: 1689915582175948, guid: 0f12bf9af25d9744a8f6ac0c93fb1af9, type: 2}
   targetPrefab: {fileID: 1374145275487176, guid: fad1049455c073048a9a668102ae83e4,
