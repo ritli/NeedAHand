@@ -17,7 +17,11 @@ public class CameraController : MonoBehaviour {
 	
 	void Start ()
 	{
-        Invoke("DelayedStart", 0.1f);
+        //Invoke("DelayedStart", 0.1f);
+		List<GameObject> players = GameManager._GetInstance().GetPlayers();
+		player1 = players[0].transform;
+		player2 = players[1].transform;
+
 	}
 	
     void DelayedStart()

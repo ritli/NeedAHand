@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 {
     #region public
     // Functions
-
+	public List<GameObject> GetPlayers()
+	{
+		return m_players;
+	}
 	public static GameManager _GetInstance()
 	{
 		return m_Instance;
