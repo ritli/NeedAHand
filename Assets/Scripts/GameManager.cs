@@ -195,8 +195,11 @@ public class GameManager : MonoBehaviour
         {
             if (l.transform.parent == null || l.transform.parent.GetComponent<Body>().playerID == playerId)
             {
-                m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(y => y.Key == l.id));
-                Destroy(l.gameObject);
+                if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
+                {
+                    m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(y => y.Key == l.id));
+                    Destroy(l.gameObject);
+                }
             }
             else
             {
