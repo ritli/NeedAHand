@@ -50,6 +50,8 @@ public class Body : MonoBehaviour {
     public AudioClip[] deathSounds;
     public AudioClip[] throwSounds;
     public AudioClip[] growlSounds;
+    public AudioClip[] bluegrowlSounds;
+
 
     public GameObject legPrefab;
     public GameObject armPrefab;
@@ -398,8 +400,20 @@ public class Body : MonoBehaviour {
         {
             if (!growlSoundPlayed)
             {
-                PlayRandomSound(growlSounds);
+                if (playerID == 2)
+                {
+                    PlayRandomSound(bluegrowlSounds);
+
+                }
+                else
+                {
+                    PlayRandomSound(growlSounds);
+
+                }
                 growlSoundPlayed = true;
+
+                audio.pitch = 1f;
+
             }
 
             ShowLimbs(true, false);
