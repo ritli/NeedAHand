@@ -138,6 +138,14 @@ public class GameManager : MonoBehaviour
         player.transform.position = (player.GetComponent<Body>().playerID == 1 ? p1Checkpoint.pos : p2Checkpoint.pos);
 		StartCoroutine(DelaySpawn(player));
     }
+
+    public void TrackLimb(Limb limb)
+    {
+        m_trackedLimbs.Add(new KeyValuePair<Limb, int>(limb, limb.gameObject.transform.parent.GetComponent<Body>().playerID));
+    }
+
+  
+
 	private IEnumerator DelaySpawn(GameObject player)
 	{
 		yield return new WaitForSeconds(spawnDelay);
@@ -157,6 +165,7 @@ public class GameManager : MonoBehaviour
 
 	#region private
 	private List<GameObject> m_players = new List<GameObject>();
+    private List<KeyValuePair<Limb, int>> m_trackedLimbs = new List<KeyValuePair<Limb, int>>();
     private object m_currentMap;
 	private CheckpointData p1Checkpoint;
 	private CheckpointData p2Checkpoint;

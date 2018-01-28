@@ -93,28 +93,7 @@ public class Body : MonoBehaviour {
     {
         if (clearCurrentLimbs)
         {
-            //int length = GetArmCount;
-
-            //for (int i = 0; i < length; i++)
-            //{
-            //    RemoveLimb(LimbType.Arm);
-            //}
-
-            //length = GetLegCount;
-
-            //for (int i = 0; i < length; i++)
-            //{
-            //    RemoveLimb(LimbType.Leg);
-            //}
-            foreach(Transform child in transform)
-            {
-                if (child.GetComponent<Limb>() != null)
-                {
-                    if (limbs.Contains(child.GetComponent<Limb>()))
-                        limbs.Remove(child.GetComponent<Limb>());
-                    Destroy(child.gameObject);
-                }
-            }
+            PurgeLimbs();
         }
 
         for (int i = 0; i < LegCount; i++)
@@ -124,6 +103,19 @@ public class Body : MonoBehaviour {
         for (int i = 0; i < ArmCount; i++)
         {
             AddLimb(LimbType.Arm);
+        }
+    }
+
+    private void PurgeLimbs()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Limb>() != null)
+            {
+                if (limbs.Contains(child.GetComponent<Limb>()))
+                    limbs.Remove(child.GetComponent<Limb>());
+                Destroy(child.gameObject);
+            }
         }
     }
 
