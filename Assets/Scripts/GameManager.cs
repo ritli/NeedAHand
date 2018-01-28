@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
 		//remove additional Managers
 		GameManager[] managers = FindObjectsOfType<GameManager>();
-		if (managers.Length < 1)
+		if (managers.Length > 1)
 		{
 			Destroy(gameObject);
 		}
