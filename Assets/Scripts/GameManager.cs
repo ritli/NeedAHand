@@ -143,11 +143,17 @@ public class GameManager : MonoBehaviour
 
     public void TrackLimb(Limb limb)
     {
-        if (!m_trackedLimbsIds.Contains(limb.id))
-            m_trackedLimbsIds.Add(limb.id);
+        //if (!m_trackedLimbsIds.Contains(limb.id))
+        //    m_trackedLimbsIds.Add(limb.id);
     }
 
-
+    public void UntrackLimb(Limb l)
+    {
+        if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
+        {
+            m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(x => x.Key == l.id));
+        }
+    }
 
     private IEnumerator DelaySpawn(GameObject player)
     {
@@ -166,30 +172,35 @@ public class GameManager : MonoBehaviour
     {
         int[] connectedToAlly = { 0, 0 };
 
-        Limb[] allLimbs = FindObjectsOfType<Limb>();
+//        Limb[] allLimbs = FindObjectsOfType<Limb>();
 
-        foreach (Limb l in allLimbs.Where(x => m_trackedLimbsIds.Contains(x.id)))
-        {
-            if (l.transform.parent == null || l.transform.parent.GetComponent<Body>().playerID == playerId)
-            {
-                m_trackedLimbsIds.Remove(l.id);
-                Destroy(l.gameObject);
-            }
-            else
-            {
-                switch (l.getLimb())
-                {
-                    case LimbType.Arm:
-                        connectedToAlly[1]++;
-                        break;
-                    case LimbType.Leg:
-                        connectedToAlly[0]++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+//        foreach (Limb l in allLimbs)
+//        {
+//            KeyValuePair<System.Guid, int> imageData;
+//            if (m_trackedLimbsIds.Exists(imageData) && l.transform.parent == null || l.transform.parent.GetComponent<Body>().playerID == playerId)
+//            {
+//                if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
+//                {
+//                    m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(y => y.Key == l.id));
+//                }
+//                Destroy(l.gameObject);
+//            }
+//            else
+//            {
+////if(m_trackedLimbsIds.Exist())
+//                switch (l.getLimb())
+//                {
+//                    case LimbType.Arm:
+//                        connectedToAlly[1]++;
+//                        break;
+//                    case LimbType.Leg:
+//                        connectedToAlly[0]++;
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        }
 
         return connectedToAlly;
     }
@@ -203,7 +214,7 @@ public class GameManager : MonoBehaviour
 
 	#region private
 	private List<GameObject> m_players = new List<GameObject>();
-    private List<System.Guid> m_trackedLimbsIds = new List<System.Guid>();
+    private List<KeyValuePair<System.Guid, int>> m_trackedLimbsIds = new List<KeyValuePair<System.Guid, int>>();
     private object m_currentMap;
 	private CheckpointData p1Checkpoint;
 	private CheckpointData p2Checkpoint;

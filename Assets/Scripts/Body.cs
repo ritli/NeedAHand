@@ -498,7 +498,7 @@ public class Body : MonoBehaviour {
         }
     }
 
-    bool RemoveLimb(LimbType limbtype)
+    System.Guid RemoveLimb(LimbType limbtype)
     {
         for (int i = 0; i < limbs.Count; i++)
         {
@@ -512,9 +512,10 @@ public class Body : MonoBehaviour {
                     if (transform.GetChild(t).GetComponent<Limb>()) {
                         if (transform.GetChild(t).GetComponent<Limb>().getLimb() == limbtype)
                         {
+                            System.Guid oldId = transform.GetChild(t).GetComponent<Limb>().id;
                             Destroy(transform.GetChild(t).gameObject);
 
-                            return true;
+                            return oldId;
                         }
                     }
                     
@@ -523,15 +524,16 @@ public class Body : MonoBehaviour {
             }
         }
 
-        return false;
+        return System.Guid.Empty;
     }
 
     void ThrowLimb(LimbType limbtype)
     {
         GameObject objectToSpawn = null;
+        System.Guid limbId = RemoveLimb(limbtype);
 
         //If player does not have limb of this type no limb is thrown
-        if (!RemoveLimb(limbtype))
+        if (limbId != System.Guid.Empty)
         {
             print("No limb left of this type");
 
@@ -554,6 +556,7 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
+        launchedLimb.GetComponent<Limb>().id = limbId;
         launchedLimb.GetComponent<Limb>().Throw(GetArmCount);
 
         Vector2 dir = Vector2.zero;
