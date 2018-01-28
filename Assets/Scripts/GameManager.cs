@@ -143,8 +143,8 @@ public class GameManager : MonoBehaviour
 
     public void TrackLimb(Limb limb)
     {
-        //if (!m_trackedLimbsIds.Contains(limb.id))
-        //    m_trackedLimbsIds.Add(limb.id);
+        if (!m_trackedLimbsIds.Exists(x => x.Key == limb.id))
+            m_trackedLimbsIds.Add(new KeyValuePair<System.Guid, int>(limb.id, limb.transform.parent.GetComponent<Body>().playerID));
     }
 
     public void UntrackLimb(Limb l)
@@ -172,35 +172,33 @@ public class GameManager : MonoBehaviour
     {
         int[] connectedToAlly = { 0, 0 };
 
-//        Limb[] allLimbs = FindObjectsOfType<Limb>();
+        Limb[] allLimbs = FindObjectsOfType<Limb>();
 
-//        foreach (Limb l in allLimbs)
-//        {
-//            KeyValuePair<System.Guid, int> imageData;
-//            if (m_trackedLimbsIds.Exists(imageData) && l.transform.parent == null || l.transform.parent.GetComponent<Body>().playerID == playerId)
-//            {
-//                if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
-//                {
-//                    m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(y => y.Key == l.id));
-//                }
-//                Destroy(l.gameObject);
-//            }
-//            else
-//            {
-////if(m_trackedLimbsIds.Exist())
-//                switch (l.getLimb())
-//                {
-//                    case LimbType.Arm:
-//                        connectedToAlly[1]++;
-//                        break;
-//                    case LimbType.Leg:
-//                        connectedToAlly[0]++;
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        }
+        foreach (Limb l in allLimbs)
+        {
+            if (l.transform.parent == null || l.transform.parent.GetComponent<Body>().playerID == playerId)
+            {
+                m_trackedLimbsIds.Remove(m_trackedLimbsIds.Find(y => y.Key == l.id));
+                Destroy(l.gameObject);
+            }
+            else
+            {
+                if (m_trackedLimbsIds.Exists(x => x.Key == l.id))
+                {
+                    switch (l.getLimb())
+                    {
+                        case LimbType.Arm:
+                            connectedToAlly[1]++;
+                            break;
+                        case LimbType.Leg:
+                            connectedToAlly[0]++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
 
         return connectedToAlly;
     }

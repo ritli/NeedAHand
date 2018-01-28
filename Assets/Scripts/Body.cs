@@ -116,6 +116,7 @@ public class Body : MonoBehaviour {
             {
                 if (limbs.Contains(child.GetComponent<Limb>()))
                     limbs.Remove(child.GetComponent<Limb>());
+                GameManager._GetInstance().UntrackLimb(child.GetComponent<Limb>());
                 Destroy(child.gameObject);
             }
         }
