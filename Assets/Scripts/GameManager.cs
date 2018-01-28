@@ -69,8 +69,14 @@ public class GameManager : MonoBehaviour
 	// Input?
 	public void LoadLevel(int levelIndex)
     {
-		StartCoroutine(TransitionController._GetInstance().Transition(levelIndex));
+        p1Checkpoint = new CheckpointData();
+        p1Checkpoint.id = -1;
+        p2Checkpoint = new CheckpointData();
+        p2Checkpoint.id = -1;
+
+        StartCoroutine(TransitionController._GetInstance().Transition(levelIndex));
 		currentLevelIndex = levelIndex;
+    
     }
 
     // Input?
@@ -79,7 +85,12 @@ public class GameManager : MonoBehaviour
 		//For now, return to main menu
 		currentLevelIndex++;
 		StartCoroutine(TransitionController._GetInstance().Transition(currentLevelIndex));
-	}
+
+        p1Checkpoint = new CheckpointData();
+        p1Checkpoint.id = -1;
+        p2Checkpoint = new CheckpointData();
+        p2Checkpoint.id = -1;
+    }
 
     // Input/Output?
     public void SetCheckpoint(CheckpointData point, int playerID)
@@ -113,7 +124,7 @@ public class GameManager : MonoBehaviour
 		//	RespawnPlayer(player);
 		//});
 	}
-	void OnLevelFinishedLoading(Scene level, LoadSceneMode mode)
+	public void OnLevelFinishedLoading(Scene level, LoadSceneMode mode)
 	{
 		if(level.buildIndex != 0 & level.buildIndex != 1)
 		{
