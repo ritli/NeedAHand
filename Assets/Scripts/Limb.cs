@@ -18,5 +18,7 @@ public abstract class Limb : MonoBehaviour {
 
     LimbType limbtype;
 
+    public System.Guid id;
+
     public abstract LimbType getLimb();
 }

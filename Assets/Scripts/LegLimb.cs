@@ -22,6 +22,7 @@ public class LegLimb : Limb {
 
         }
 
+        id = System.Guid.NewGuid();
         spawntime = Time.time;
     }
 
