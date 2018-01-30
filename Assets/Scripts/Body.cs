@@ -73,7 +73,7 @@ public class Body : MonoBehaviour {
     float xMultiplier = 0;
 
     MouthHandler mouth;
-
+    Vector2 lastInput;
 
     AudioSource audio;
 
@@ -90,7 +90,6 @@ public class Body : MonoBehaviour {
         }
 		else
 		{
-			Debug.Log("Blue effect");
 			m_MoveEffect = Instantiate(moveEffets[0]).GetComponent<ParticleSystem>();
 		}
 		m_MoveEffect.transform.SetParent(gameObject.transform);
@@ -195,7 +194,6 @@ public class Body : MonoBehaviour {
             {
                 input = Vector2.zero;
             }
-      
 
             Vector3 offset = (Vector2)transform.position - ((Vector2)transform.position + input);
 
@@ -208,7 +206,20 @@ public class Body : MonoBehaviour {
                     }
                     break;
                 case 2:
+                    /*
+                    foreach (string s in Input.GetJoystickNames())
+                    {
+                        print(s);
+                    }
 
+
+                    if (Input.GetJoystickNames().Length < 1)
+                    {
+                        input = Vector2.MoveTowards(lastInput, input, 0.2f);
+
+                        lastInput = input;
+                    }
+                    */
                     break;
 
                 default:

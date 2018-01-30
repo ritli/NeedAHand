@@ -20,7 +20,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 1
+    joyNum: 16
   - serializedVersion: 3
     m_Name: p1Vertical
     descriptiveName: 
@@ -36,9 +36,9 @@ InputManager:
     invert: 0
     type: 0
     axis: 1
-    joyNum: 1
+    joyNum: 16
   - serializedVersion: 3
-    m_Name: p1ThrowTriggerr
+    m_Name: p1ThrowTrigger
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -52,7 +52,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 9
-    joyNum: 1
+    joyNum: 16
   - serializedVersion: 3
     m_Name: p1Throw
     descriptiveName: 
@@ -77,21 +77,21 @@ InputManager:
     positiveButton: right
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 3
+    gravity: 50
     dead: 0.001
-    sensitivity: 3
+    sensitivity: 50
     snap: 0
     invert: 0
     type: 0
     axis: 0
-    joyNum: 2
+    joyNum: 0
   - serializedVersion: 3
     m_Name: p2Vertical
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: joystick 2 button 0
     positiveButton: up
-    altNegativeButton: 
+    altNegativeButton: down
     altPositiveButton: 
     gravity: 1
     dead: 0.001
@@ -100,7 +100,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 27
-    joyNum: 2
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Mouse X
     descriptiveName: 
@@ -164,13 +164,13 @@ InputManager:
     invert: 0
     type: 2
     axis: 9
-    joyNum: 2
+    joyNum: 16
   - serializedVersion: 3
     m_Name: p2Throw
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick 2 button 2
+    positiveButton: joystick button 2
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1
@@ -180,7 +180,7 @@ InputManager:
     invert: 1
     type: 0
     axis: 1
-    joyNum: 2
+    joyNum: 0
   - serializedVersion: 3
     m_Name: p2Horizontal
     descriptiveName: 
@@ -196,7 +196,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 0
-    joyNum: 2
+    joyNum: 0
   - serializedVersion: 3
     m_Name: p2Vertical
     descriptiveName: 
@@ -212,7 +212,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 1
-    joyNum: 2
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Fire3
     descriptiveName: 
@@ -244,7 +244,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 9
-    joyNum: 1
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Submit
     descriptiveName: 
@@ -308,7 +308,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 0
-    joyNum: 1
+    joyNum: 16
   - serializedVersion: 3
     m_Name: p1Vertical
     descriptiveName: 
@@ -324,4 +324,20 @@ InputManager:
     invert: 1
     type: 2
     axis: 1
-    joyNum: 1
+    joyNum: 16
+  - serializedVersion: 3
+    m_Name: p2ThrowTrigger
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: right ctrl
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0
+    sensitivity: 1000
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 27
+    joyNum: 0
