@@ -15,11 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 3d37332b27e908849aa0e047e3517a36
   - enabled: 1
-    path: Assets/Scenes/MilkBana1.unity
-    guid: 8a9b62bea96534b4387c05ef3d3848b3
-  - enabled: 1
     path: Assets/Designers den/A_level1.unity
     guid: b4e5b24c53a64604d81f8dcce4343c4c
+  - enabled: 1
+    path: Assets/Scenes/MilkBana1.unity
+    guid: 8a9b62bea96534b4387c05ef3d3848b3
   - enabled: 0
     path: Assets/Designers den/DeLovadeMigJobb.unity
     guid: 3df67ce5d808aee4c90c4d636a23df1b
