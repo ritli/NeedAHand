@@ -25,7 +25,7 @@ InputManager:
     m_Name: p1Vertical
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: joystick 1 button 0
+    negativeButton: 
     positiveButton: space
     altNegativeButton: 
     altPositiveButton: w
@@ -60,7 +60,7 @@ InputManager:
     negativeButton: 
     positiveButton: mouse 1
     altNegativeButton: 
-    altPositiveButton: joystick 1 button 2
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -89,7 +89,7 @@ InputManager:
     m_Name: p2Vertical
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: joystick 2 button 0
+    negativeButton: joystick button 0
     positiveButton: up
     altNegativeButton: down
     altPositiveButton: 

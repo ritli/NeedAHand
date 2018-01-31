@@ -237,7 +237,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 31695338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 568, y: 319.5, z: 0}
+  m_LocalPosition: {x: 484.5, y: 267.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2006415391}
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDelay: 2
-  startFromMenu: 0
+  startFromMenu: 1
   playerprefab: {fileID: 1432525469189120, guid: 72d39656b9d255a4dbc5800190b085eb,
     type: 2}
   playerSpawnDelay: 0.37
