@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class TransitionController : MonoBehaviour {
 
 	public Image black;
-	public float transitionSpeed;
+    public GameObject TutorialPanel;
+    public float transitionSpeed;
 	public int m_currentScene;
 	private bool isInTransition = false;
 
@@ -61,6 +62,16 @@ public class TransitionController : MonoBehaviour {
         if (m_currentScene != 0)
             SceneManager.UnloadSceneAsync(m_currentScene);
         m_currentScene = index;
+
+        if (m_currentScene > 1)
+        {
+            TutorialPanel.SetActive(true);
+        }
+        else
+        {
+            TutorialPanel.SetActive(false);
+        }
+
 
         yield return new WaitForSeconds(1);
 

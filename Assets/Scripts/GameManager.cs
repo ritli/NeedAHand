@@ -134,11 +134,12 @@ public class GameManager : MonoBehaviour
 
 	public void RespawnPlayer(GameObject player)
     {
-		Camera.main.GetComponent<CameraController>().StartShake();
-		player.gameObject.SetActive(false);
         player.GetComponent<Body>().PlayDeathSound();
 
-        if (player.GetComponent<Body>().playerID == 2)
+        Camera.main.GetComponent<CameraController>().StartShake();
+		player.gameObject.SetActive(false);
+
+        if (player.GetComponent<Body>().visualPlayerID == 2)
         {
             ParticleHandler.SpawnParticleSystem(player.transform.position, "p_bluedeath");
         }
@@ -223,10 +224,24 @@ public class GameManager : MonoBehaviour
         return connectedToAlly;
     }
 
-	// Properties
-	public float spawnDelay = 2;
+    public void RestartLevel()
+    {
+        LoadLevel(currentLevelIndex);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && currentLevelIndex != 1)
+        {
+            m_Instance.ingameMenu.SetActive(!m_Instance.ingameMenu.activeSelf);
+        }
+    }
+
+    // Properties
+    public float spawnDelay = 2;
 	public bool startFromMenu = true;
 	public GameObject playerprefab;
+    public GameObject ingameMenu;
 	public float playerSpawnDelay;
 	#endregion
 

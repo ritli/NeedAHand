@@ -151,7 +151,16 @@ public class Body : MonoBehaviour {
 
     public void PlayDeathSound()
     {
-        PlayRandomSound(deathSounds);
+        AudioClip[] clips = deathSounds;
+
+        if (Camera.main.GetComponent<AudioSource>())
+        {
+            Camera.main.GetComponent<AudioSource>().PlayOneShot((clips[Random.Range(0, clips.Length)]));
+        }
+        else
+        {
+            Camera.main.gameObject.AddComponent<AudioSource>().PlayOneShot((clips[Random.Range(0, clips.Length)]));
+        }
     }
 
     public void PlayRandomSound(AudioClip[] clips)
@@ -445,10 +454,10 @@ public class Body : MonoBehaviour {
             {
                 PlayRandomSound(landSounds);
                 InAir = false;
+                xMultiplier = 0.2f;
 
 
-
-                if (playerID == 2)
+                if (visualPlayerID == 2)
                 {
                     ParticleHandler.SpawnParticleSystem(transform.position + Vector3.down * 0.5f, "p_bluesplash");
                 }
@@ -617,14 +626,7 @@ public class Body : MonoBehaviour {
         {
             AddLimb(legPrefab.GetComponent<Limb>().getLimb());
         }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ThrowLimb(LimbType.Arm);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ThrowLimb(LimbType.Leg);
-        }
+
     }
 
     System.Guid RemoveLimb(LimbType limbtype)
@@ -659,10 +661,10 @@ public class Body : MonoBehaviour {
     void ThrowLimb(LimbType limbtype)
     {
         GameObject objectToSpawn = null;
-        System.Guid limbId = RemoveLimb(limbtype);
+        System.Guid limbID = RemoveLimb(limbtype);
 
         //If player does not have limb of this type no limb is thrown
-        if (limbId == System.Guid.Empty)
+        if (limbID == System.Guid.Empty)
         {
             print("No limb left of this type");
 
@@ -685,27 +687,12 @@ public class Body : MonoBehaviour {
 
          GameObject launchedLimb = Instantiate(objectToSpawn, (Vector3)Random.insideUnitCircle * 0.25f + transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
-        launchedLimb.GetComponent<Limb>().id = limbId;
-        launchedLimb.GetComponent<Limb>().Throw(GetArmCount);
+        launchedLimb.GetComponent<Limb>().id = limbID;
+        launchedLimb.GetComponent<Limb>().Throw(GetArmCount, visualPlayerID);
 
         Vector2 dir = Vector2.zero;
 
         dir = target.transform.position - transform.position;
-
-// 
-//         switch (playerID)
-//         {
-//             case 1:
-//                 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-// 
-//                 break;
-//             case 2:
-//                 dir = target.transform.position - transform.position;
-// 
-//                 break;
-//             default:
-//                 break;
-//         }
 
         launchedLimb.GetComponent<Rigidbody2D>().mass = 1;
 
@@ -716,8 +703,12 @@ public class Body : MonoBehaviour {
 
     }
 
+    float limbCD = 0;
+
     public System.Guid AddLimb(LimbType limb)
     {
+
+
         GameObject objectToSpawn = null;
 
         Vector3 randomLoc = Random.insideUnitCircle.normalized;
@@ -809,12 +800,26 @@ public class Body : MonoBehaviour {
         get
         {
             int i = 0;
+
+            for (int t = 0; t < limbs.Count; t++)
+            {
+                if (limbs[t] == null)
+                {
+                    limbs.RemoveAt(t);
+                }
+            }
+
             foreach (Limb l in limbs)
             {
-                if (l.GetComponent<LegLimb>())
+                if (l != null)
                 {
-                    i++;
+
+                    if (l.GetComponent<LegLimb>())
+                    {
+                        i++;
+                    }
                 }
+
             }
 
             return i;
@@ -825,12 +830,24 @@ public class Body : MonoBehaviour {
     {
         get
         {
+            for (int t = 0; t < limbs.Count; t++)
+            {
+                if (limbs[t] == null)
+                {
+                    limbs.RemoveAt(t);
+                }
+            }
+
             int i = 0;
             foreach (Limb l in limbs)
             {
-                if (l.GetComponent<ArmLimb>())
+                if (l != null)
                 {
-                    i++;
+
+                    if (l.GetComponent<ArmLimb>())
+                    {
+                        i++;
+                    }
                 }
             }
 

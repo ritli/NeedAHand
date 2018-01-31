@@ -7,7 +7,7 @@ public class LegLimb : Limb {
     bool connected = false;
     public float spawntime;
     int throwForce;
-
+    public int playerID;
     // Use this for initialization
     void Start () {
         if (transform.parent)
@@ -46,9 +46,10 @@ public class LegLimb : Limb {
         return Time.time - spawntime;
     }
 
-    public override void Throw(int force)
+    public override void Throw(int force, int id)
     {
         throwForce = force;
+        playerID = id;
 
         foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
         {
@@ -72,5 +73,10 @@ public class LegLimb : Limb {
     public override int getThrowForce()
     {
         return throwForce;
+    }
+
+    public override int getPlayerID()
+    {
+        return playerID;
     }
 }

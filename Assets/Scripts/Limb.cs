@@ -10,10 +10,11 @@ public enum LimbType
 
 public abstract class Limb : MonoBehaviour {
 
+    public abstract int getPlayerID();
     public abstract float getLifetime();
     public abstract bool getConnected();
     public abstract void setConnected(bool connected);
-    public abstract void Throw(int force);
+    public abstract void Throw(int force, int id);
     public abstract int getThrowForce();
 
     LimbType limbtype;

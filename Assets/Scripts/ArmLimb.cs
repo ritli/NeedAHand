@@ -8,7 +8,7 @@ public class ArmLimb : Limb {
     bool connected = false;
     Animator animator;
     int throwForce;
-
+    int playerID;
 
     // Use this for initialization
     void Start()
@@ -44,9 +44,10 @@ public class ArmLimb : Limb {
         return Time.time - spawntime;
     }
 
-    public override void Throw(int force)
+    public override void Throw(int force, int id)
     {
         throwForce = force;
+        playerID = id;
 
         foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
         {
@@ -68,5 +69,10 @@ public class ArmLimb : Limb {
     public override int getThrowForce()
     {
         return throwForce;
+    }
+
+    public override int getPlayerID()
+    {
+        return playerID;
     }
 }
