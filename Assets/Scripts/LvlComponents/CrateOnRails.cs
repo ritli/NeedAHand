@@ -55,7 +55,6 @@ public class CrateOnRails : MonoBehaviour
         if (m_active)
         {
             float dist = Vector3.Distance(m_startPos, transform.position);
-            print(dist.ToString());
             if (m_reverting)
             {
                 if (dist > 0.3f)

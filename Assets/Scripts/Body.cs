@@ -8,6 +8,8 @@ public class Body : MonoBehaviour {
     [Range(1,2)]
     public int playerID = 1;
 
+    public int visualPlayerID = 1;
+
     public List<Limb> limbs;
 
     public List<Vector3> localPositions;
@@ -76,6 +78,7 @@ public class Body : MonoBehaviour {
     Vector2 lastInput;
 
     AudioSource audio;
+    bool canSwitchCharacter = true;
 
     void Start () {
         mouth = GetComponentInChildren<MouthHandler>();
@@ -83,14 +86,20 @@ public class Body : MonoBehaviour {
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
+
+
         if (playerID == 2)
         {
+            visualPlayerID = 2;
+
             animator.SetInteger("Blue", 1);
 			m_MoveEffect = Instantiate(moveEffets[1]).GetComponent<ParticleSystem>();
         }
 		else
 		{
-			m_MoveEffect = Instantiate(moveEffets[0]).GetComponent<ParticleSystem>();
+            visualPlayerID = 1;
+
+            m_MoveEffect = Instantiate(moveEffets[0]).GetComponent<ParticleSystem>();
 		}
 		m_MoveEffect.transform.SetParent(gameObject.transform);
 		m_MoveEffect.transform.localPosition = Vector3.zero;
@@ -134,7 +143,7 @@ public class Body : MonoBehaviour {
 
     public void ResetAnimator()
     {
-        if (playerID == 2)
+        if (visualPlayerID == 2)
         {
             animator.SetInteger("Blue", 1);
         }
@@ -163,6 +172,87 @@ public class Body : MonoBehaviour {
         AnimationUpdate();
 	}
 
+    IEnumerator SwitchControls()
+    {
+        canSwitchCharacter = false;
+
+        string s = "Player2Arrow";
+
+        if (visualPlayerID == 1)
+        {
+            s = "Player1Arrow";
+        }
+
+        GameObject arrow = Resources.Load<GameObject>(s);
+
+      
+
+        switch (playerID)
+        {
+            case 1:
+                playerID = 2;
+
+                arrow = Instantiate(arrow, transform.position + Vector3.up, transform.rotation, transform);
+
+                if (playerID != visualPlayerID)
+                {
+                    arrow.GetComponentInChildren<TMPro.TextMeshPro>().text = "Player 2\n(Controller)";
+                }
+
+
+                break;
+            case 2:
+                playerID = 1;
+
+                
+                arrow = Instantiate(arrow, transform.position + Vector3.up, transform.rotation, transform);
+
+                if (playerID != visualPlayerID)
+                {
+                    arrow.GetComponentInChildren<TMPro.TextMeshPro>().text = "Player 1\n(Keyboard)";
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        TMPro.TextMeshPro text = arrow.GetComponentInChildren<TMPro.TextMeshPro>();
+        SpriteRenderer sprite = arrow.GetComponent<SpriteRenderer>();
+
+        float alpha = 0, toAlpha = 1;
+        int mult = 1;
+
+
+        do
+        {
+            alpha += Time.deltaTime * mult;
+
+            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
+
+            yield return new WaitForEndOfFrame();
+        } while (alpha < toAlpha);
+
+        yield return new WaitForSeconds(1f);
+
+        toAlpha = 0;
+        mult = -1;
+
+        do
+        {
+            alpha += Time.deltaTime * mult;
+
+            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
+
+            yield return new WaitForEndOfFrame();
+        } while (alpha > toAlpha);
+
+        Destroy(arrow.gameObject);
+        canSwitchCharacter = true;
+    }
+
     void ShowTarget(bool isActive)
     {
         if (!target && isActive)
@@ -170,7 +260,7 @@ public class Body : MonoBehaviour {
             target = Instantiate(targetPrefab, transform);
             target.transform.localPosition = Vector2.zero;
 
-            switch (playerID)
+            switch (visualPlayerID)
             {
                 case 1:
                     target.GetComponent<SpriteRenderer>().color = Color.green;
@@ -378,6 +468,12 @@ public class Body : MonoBehaviour {
 
     void InputUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Tab) && canSwitchCharacter)
+        {
+            print("Switching");
+            StartCoroutine(SwitchControls());
+        }
+
         if (Input.GetKeyDown(KeyCode.F1) && playerID == 1)
         {
             GameManager._GetInstance().LoadLevel(2);
@@ -445,7 +541,7 @@ public class Body : MonoBehaviour {
             PlayRandomSound(jumpSounds);
 
 
-            if (playerID == 2)
+            if (visualPlayerID == 2)
             {
                 ParticleHandler.SpawnParticleSystem(transform.position, "p_bluejump");
             }
